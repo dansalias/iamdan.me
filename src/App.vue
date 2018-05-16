@@ -1,14 +1,27 @@
 <template>
   <div id="app">
     <Header/>
+    <section>
+      <h2>I have helped build</h2>
+      <ul>
+        <li v-for="(item, index) in portfolio" :key="index">
+          {{ item.name }}
+        </li>
+      </ul>
+    </section>
   </div>
 </template>
 
 <script>
 import Header from './components/Header.vue';
 
+import portfolio from './data/portfolio';
+
 export default {
   name: 'app',
+  data: () => ({
+    portfolio,
+  }),
   components: {
     Header,
   },
