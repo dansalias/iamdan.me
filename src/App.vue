@@ -65,6 +65,7 @@ export default {
   display: flex;
   margin: 48px auto 16px;
   width: 100%;
+  max-width: 24rem;
   border: 1px solid #666666;
   border-radius: 5px;
   overflow: hidden;

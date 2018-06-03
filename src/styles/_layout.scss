@@ -2,7 +2,9 @@ $section-spacing: 60px;
 $border-colour: #999999;
 
 #app {
-  margin: 1.2rem;
+  margin: 0 auto;
+  padding: 1.2rem;
+  max-width: 1000px;
 }
 
 section {
