@@ -49,6 +49,7 @@ export default {
 <style lang="scss">
 @import url("https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css");
 @import url("https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,600");
+@import 'styles/colours';
 @import 'styles/defaults';
 @import 'styles/typography';
 @import 'styles/layout';
@@ -66,14 +67,14 @@ export default {
   margin: 48px auto 16px;
   width: 100%;
   max-width: 24rem;
-  border: 1px solid #666666;
+  border: 1px solid $dark-grey;
   border-radius: 5px;
   overflow: hidden;
   font-size: 0.85rem;
   li {
     flex-grow: 1;
     &:not(:last-child) {
-      border-right: 1px solid #666666;
+      border-right: 1px solid $dark-grey;
     }
     a {
       display: flex;
@@ -82,7 +83,7 @@ export default {
       justify-content: center;
       align-items: center;
       &:hover {
-        background: #f9f9f9;
+        background: $light-grey;
       }
     }
   }
@@ -97,9 +98,9 @@ export default {
 footer {
   padding: 20px 0 0 0;
   font-size: 0.8em;
-  color: #666666;
+  color: $dark-grey;
   a {
-    border-bottom: 1px dotted #999999;
+    border-bottom: 1px dotted $medium-grey;
   }
 }
 </style>

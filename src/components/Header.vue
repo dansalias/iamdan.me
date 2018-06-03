@@ -12,13 +12,14 @@
 </template>
 
 <style lang="scss">
+  @import '../styles/colours';
   #profile-image {
     position: relative;
     width: 200px;
     height: 200px;
     margin: 0 auto;
     border-radius: 50%;
-    border: 1px solid #000000;
+    border: 1px solid $dark-grey;
     overflow: hidden;
   }
 </style>
