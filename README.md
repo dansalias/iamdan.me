@@ -2,6 +2,16 @@
 
 The iamdan.me website.
 
+## Developing
+```bash
+npm run serve
+```
+
+## Building
+```bash
+npm run build
+```
+
 ## Deploying
 
 ```bash
