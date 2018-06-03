@@ -15,6 +15,6 @@ npm run build
 ## Deploying
 
 ```bash
-git subtree push --prefix dist github gh-pages
+npm run deploy
 ```
-[Source](https://gist.github.com/cobyism/4730490)
+[Source](https://musteresel.github.io/posts/2018/01/git-worktree-for-deploying.html)
