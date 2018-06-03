@@ -1,0 +1,24 @@
+$section-spacing: 60px;
+$border-colour: #999999;
+
+#app {
+  margin: 1.2rem;
+}
+
+section {
+  position: relative;
+  margin: $section-spacing 0 0 0;
+  border-top: 1px solid $border-colour;
+  border-bottom: 1px solid $border-colour;
+  padding: $section-spacing/2 0;
+  &:before {
+    content: '';
+    width: 1px;
+    height: $section-spacing;
+    background: $border-colour;
+    position: absolute;
+    top: -$section-spacing - 1;
+    left: 50%;
+  }
+}
+
