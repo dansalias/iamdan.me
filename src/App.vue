@@ -19,7 +19,6 @@
       <ul class="social-buttons">
         <li><a href="https://linkedin.com/in/kiwidan92"><img src="images/icons/linkedin.svg">LinkedIn</a></li>
         <li><a href="https://github.com/d4n13ly"><img src="images/icons/github.svg">GitHub</a></li>
-        <li><a href="/daniel-young.pdf"><img src="images/icons/file.svg">Résumé</a></li>
       </ul>
     </section>
     <footer>
