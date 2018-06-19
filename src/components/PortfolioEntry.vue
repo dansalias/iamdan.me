@@ -15,8 +15,8 @@ export default {
 <style lang="scss">
 .portfolio-entry {
     margin: 0 12px 24px;
-    box-shadow: 2px 2px 8px #cccccc;
     a {
+      box-shadow: 2px 2px 8px #cccccc;
       position: relative;
       display: block;
       width: 280px;
@@ -29,6 +29,9 @@ export default {
         bottom: 0;
         margin: auto;
         width: 80%;
+      }
+      &:hover {
+        box-shadow: 4px 4px 12px #cccccc;
       }
     }
   }
