@@ -17,8 +17,8 @@
         <input type="submit" value="Send">
       </form>
       <ul class="social-buttons">
-        <li><a href="https://linkedin.com/in/kiwidan92"><img src="images/icons/linkedin.svg">LinkedIn</a></li>
-        <li><a href="https://github.com/iamdan2"><img src="images/icons/github.svg">GitHub</a></li>
+        <li><a href="https://linkedin.com/in/dansalias"><img src="images/icons/linkedin.svg">LinkedIn</a></li>
+        <li><a href="https://github.com/dansalias"><img src="images/icons/github.svg">GitHub</a></li>
         <li><a href="/daniel_young_resume_18-06.pdf"><img src="images/icons/file.svg">Résumé</a></li>
       </ul>
     </section>
