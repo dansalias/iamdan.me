@@ -10,6 +10,7 @@
     "live-resume": "livereload ./src/resume"
   },
   "dependencies": {
+    "node-sass": "^4.13.1",
     "vue": "^2.5.22"
   },
   "devDependencies": {
@@ -18,7 +19,6 @@
     "@vue/cli-service": "^3.3.1",
     "@vue/eslint-config-airbnb": "^3.0.5",
     "livereload": "^0.7.0",
-    "node-sass": "^4.11.0",
     "sass-loader": "^6.0.6",
     "vue-template-compiler": "^2.5.22"
   },
