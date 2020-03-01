@@ -33,9 +33,9 @@
       </ul>
     </main>
     <footer class="py-4 text-center">
-      Photo credit <a href="https://www.instagram.com/wojciechbarczuk">Wojciech Barczuk</a>.
-      Icons by <a href="https://fontawesome.com">Font Awesome</a>.
-      Source code on <a href="https://github.com/dansalias/iamdan.me">GitHub</a>.
+      Photo credit <a href="https://www.instagram.com/wojciechbarczuk" target="_new">Wojciech Barczuk</a>.
+      Icons by <a href="https://fontawesome.com" target="_new">Font Awesome</a>.
+      Source code on <a href="https://github.com/dansalias/iamdan.me" target="_new">GitHub</a>.
     </footer>
   </div>
 </template>
