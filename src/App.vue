@@ -65,15 +65,15 @@ export default {
     articles: [
       {
         title: 'A Recipe For Creating Great Software Documentation',
-        slug: 'a-recipe-for-creating-great-software-documentation-6b372af3d303',
+        slug: 'a-recipe-for-creating-great-software-documentation-6b372af3d303?source=friends_link&sk=d7c1de2298e6fe576f3ff459e1a21e3e',
       },
       {
         title: 'Node Versions Without nvm',
-        slug: 'node-versions-without-nvm-cb9cdc0566b6',
+        slug: 'node-versions-without-nvm-cb9cdc0566b6?source=friends_link&sk=8350b0438b836759998a918934c9ac8a',
       },
       {
         title: '3-line JavaScript Lambda Testing',
-        slug: '3-line-javascript-lambda-testing-5a4118c94c97',
+        slug: '3-line-javascript-lambda-testing-5a4118c94c97?source=friends_link&sk=87f27e1776047bf092bce682610bcd94',
       },
     ]
   }),
