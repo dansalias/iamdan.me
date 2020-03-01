@@ -5,9 +5,7 @@
   "scripts": {
     "dev": "npx vue-cli-service serve",
     "build": "npx vue-cli-service build",
-    "lint": "vue-cli-service lint",
-    "deploy": "./deploy.sh",
-    "live-resume": "livereload ./src/resume"
+    "deploy": "./deploy.sh"
   },
   "dependencies": {
     "node-sass": "^4.13.1",
