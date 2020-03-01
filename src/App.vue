@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="flex flex-col min-h-screen">
     <header class="bg-me bg-cover text-center text-white px-5 py-32">
       <h1 class="text-4xl font-semibold">Hello! I am Dan.</h1>
       <p class="mt-4 mb-8 text-xl">I'm an engineer on a mission to build better, smarter software.</p>
@@ -15,7 +15,7 @@
         </li>
       </ul>
     </header>
-    <main class="max-w-3xl mx-auto p-8">
+    <main class="max-w-3xl mx-auto flex-grow p-8">
       <ul>
         <li
           v-for="(article, index) in articles"
@@ -26,8 +26,10 @@
         </li>
       </ul>
     </main>
-    <footer>
-      Portrait by <a href="https://andicrown.com">Andi Crown Photography</a>. Icons by <a href="https://fontawesome.com">Font Awesome</a>. Source code on <a href="https://github.com/d4n13ly/iamdan.me">GitHub</a>.
+    <footer class="py-4 text-center">
+      Photo credit <a href="https://www.instagram.com/wojciechbarczuk">Wojciech Barczuk</a>.
+      Icons by <a href="https://fontawesome.com">Font Awesome</a>.
+      Source code on <a href="https://github.com/dansalias/iamdan.me">GitHub</a>.
     </footer>
   </div>
 </template>
@@ -83,5 +85,9 @@ html, body {
 li.article:before {
   @apply absolute left-0 top-0 text-2xl -mt-half;
   content: '»';
+}
+
+footer a {
+  @apply underline text-indigo-700;
 }
 </style>
