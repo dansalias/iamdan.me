@@ -22,7 +22,13 @@
           :key="index"
           class="relative pl-8 article"
         >
-          <h1 class="text-2xl mb-6 font-semibold">{{ article.title }}</h1>
+          <a
+            class="hover:underline"
+            :href="`https://medium.com/@dansalias/${article.slug}`"
+            target="_new"
+          >
+            <h1 class="text-2xl mb-6 font-semibold">{{ article.title }}</h1>
+          </a>
         </li>
       </ul>
     </main>
@@ -59,12 +65,15 @@ export default {
     articles: [
       {
         title: 'A Recipe For Creating Great Software Documentation',
+        slug: 'a-recipe-for-creating-great-software-documentation-6b372af3d303',
       },
       {
         title: 'Node Versions Without nvm',
+        slug: 'node-versions-without-nvm-cb9cdc0566b6',
       },
       {
         title: '3-line JavaScript Lambda Testing',
+        slug: '3-line-javascript-lambda-testing-5a4118c94c97',
       },
     ]
   }),
