@@ -1,27 +1,31 @@
 <template>
-  <div id="app">
-    <Header/>
-    <section>
-      <h2>I have helped build</h2>
-      <ul class="portfolio">
-        <PortfolioEntry v-for="(entry, index) in portfolio.entries" :key="index" :entry="entry" :imagePath="portfolio.imagePath"/>
+  <div>
+    <header class="bg-me bg-cover text-center text-white px-5 py-32">
+      <h1 class="text-4xl font-semibold">Hello! I am Dan.</h1>
+      <p class="mt-4 mb-8 text-xl">I'm an engineer on a mission to build better, smarter software.</p>
+      <ul>
+        <li
+          v-for="(link, index) in socialLinks"
+          :key="index"
+          class="inline-block mx-4"
+        >
+          <a class="icon-small" :href="link.url" target="_new">
+            <img :src="`images/icons/${link.icon}.svg`" class="w-8"/>
+          </a>
+        </li>
       </ul>
-    </section>
-    <section>
-      <h2>Get in touch</h2>
-      <form action="https://formspree.io/danyoungnz@gmail.com" method="POST">
-        <input type="email" name="_replyto" placeholder="Your email address">
-        <input type="text" name="name" placeholder="Your name">
-        <input type="text" name="_subject" placeholder="Subject">
-        <textarea name="message" placeholder="Your message"></textarea>
-        <input type="submit" value="Send">
-      </form>
-      <ul class="social-buttons">
-        <li><a href="https://linkedin.com/in/dansalias"><img src="images/icons/linkedin.svg">LinkedIn</a></li>
-        <li><a href="https://github.com/dansalias"><img src="images/icons/github.svg">GitHub</a></li>
-        <li><a href="/daniel_young_resume_19-01.pdf"><img src="images/icons/file.svg">Résumé</a></li>
+    </header>
+    <main class="max-w-3xl mx-auto p-8">
+      <ul>
+        <li
+          v-for="(article, index) in articles"
+          :key="index"
+          class="relative pl-8 article"
+        >
+          <h1 class="text-2xl mb-6 font-semibold">{{ article.title }}</h1>
+        </li>
       </ul>
-    </section>
+    </main>
     <footer>
       Portrait by <a href="https://andicrown.com">Andi Crown Photography</a>. Icons by <a href="https://fontawesome.com">Font Awesome</a>. Source code on <a href="https://github.com/d4n13ly/iamdan.me">GitHub</a>.
     </footer>
@@ -29,78 +33,55 @@
 </template>
 
 <script>
-import Header from './components/Header.vue';
-import PortfolioEntry from './components/PortfolioEntry.vue';
-
-import portfolio from './data/portfolio';
-
 export default {
   name: 'app',
   data: () => ({
-    portfolio,
+    socialLinks: [
+      {
+        icon: 'linkedin',
+        url: 'https://linkedin.com/in/dansalias',
+      },
+      {
+        icon: 'github',
+        url: 'https://github.com/dansalias',
+      },
+      {
+        icon: 'medium',
+        url: 'https://medium.com/@dansalias',
+      },
+      {
+        icon: 'keybase',
+        url: 'https://keybase.io/dansalias',
+      },
+    ],
+    articles: [
+      {
+        title: 'A Recipe For Creating Great Software Documentation',
+      },
+      {
+        title: 'Node Versions Without nvm',
+      },
+      {
+        title: '3-line JavaScript Lambda Testing',
+      },
+    ]
   }),
-  components: {
-    Header,
-    PortfolioEntry,
-  },
 };
 </script>
 
-<style lang="scss">
-@import url("https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css");
-@import url("https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,600");
-@import 'styles/colours';
-@import 'styles/defaults';
-@import 'styles/typography';
-@import 'styles/layout';
-@import 'styles/forms';
+<style>
+@import url('https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,600&display=swap');
 
-.portfolio {
-  margin: 0px auto;
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
+html, body {
+  font-family: 'Source Sans Pro';
 }
 
-.social-buttons {
-  display: flex;
-  margin: 48px auto 16px;
-  width: 100%;
-  max-width: 24rem;
-  border: 1px solid $dark-grey;
-  border-radius: 5px;
-  overflow: hidden;
-  font-size: 0.85rem;
-  li {
-    flex-grow: 1;
-    &:not(:last-child) {
-      border-right: 1px solid $dark-grey;
-    }
-    a {
-      display: flex;
-      width: 100%;
-      height: 36px;
-      justify-content: center;
-      align-items: center;
-      &:hover {
-        background: $light-grey;
-      }
-    }
-  }
-  img {
-    margin: 0 0.2rem 0 0;
-    width: 20px;
-    height: 20px;
-    vertical-align: middle;
-  }
+.bg-me {
+  background: linear-gradient(rgba(0,0,0,0.4),rgba(0,0,0,1)), url('/images/me.jpg');
 }
 
-footer {
-  padding: 20px 0 0 0;
-  font-size: 0.8em;
-  color: $dark-grey;
-  a {
-    border-bottom: 1px dotted $medium-grey;
-  }
+li.article:before {
+  @apply absolute left-0 top-0 text-2xl -mt-half;
+  content: '»';
 }
 </style>
