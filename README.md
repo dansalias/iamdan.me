@@ -4,7 +4,9 @@ The iamdan.me website.
 
 ## Developing
 ```bash
-npm run serve
+git clone https://github.com/dansalias/iamdan.me
+npm install
+npm run dev
 ```
 
 ## Building
