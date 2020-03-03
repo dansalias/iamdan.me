@@ -1,0 +1,26 @@
+name: Deploy iamdan.me
+
+on:
+  push:
+    branches:
+      - master
+    paths:
+      - 'src/**'
+      - 'public/**'
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@master
+
+      - run: |
+          npm install
+          npm run build
+          echo "iamdan.me" >> ./dist/CNAME
+
+      - uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./dist

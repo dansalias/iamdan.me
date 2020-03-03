@@ -9,14 +9,5 @@ npm install
 npm run dev
 ```
 
-## Building
-```bash
-npm run build
-```
-
 ## Deploying
-
-```bash
-npm run deploy
-```
-[Source](https://musteresel.github.io/posts/2018/01/git-worktree-for-deploying.html)
+Pushes to master automatically deploy to the gh-pages branch.

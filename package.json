@@ -4,8 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "npx vue-cli-service serve",
-    "build": "npx vue-cli-service build",
-    "deploy": "./deploy.sh"
+    "build": "npx vue-cli-service build"
   },
   "dependencies": {
     "tailwindcss": "^1.2.0",
