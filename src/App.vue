@@ -2,7 +2,7 @@
   <div class="flex flex-col min-h-screen">
     <header class="bg-me bg-cover text-center text-white px-5 py-32">
       <h1 class="text-4xl font-semibold">Hello! I am Dan.</h1>
-      <p class="mt-4 mb-8 text-xl">I'm an engineer on a mission to build better, smarter software.</p>
+      <p class="mt-4 mb-8 text-xl">I'm a software engineer on a mission to build better, smarter web applications.</p>
       <ul>
         <li
           v-for="(link, index) in socialLinks"
