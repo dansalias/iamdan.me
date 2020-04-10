@@ -64,6 +64,10 @@ export default {
     ],
     articles: [
       {
+        title: 'Tracking Lockfiles With git-lfs',
+        slug: 'tracking-lockfiles-with-git-lfs-db86041c0570?source=friends_link&sk=82a2ed12a132c3a33103aa642e299c72',
+      },
+      {
         title: 'A Recipe For Creating Great Software Documentation',
         slug: 'a-recipe-for-creating-great-software-documentation-6b372af3d303?source=friends_link&sk=d7c1de2298e6fe576f3ff459e1a21e3e',
       },
