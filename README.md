@@ -3,8 +3,8 @@ The iamdan.me website.
 
 ## Developing
 ```bash
-git clone https://github.com/dansalias/iad
-cd iad
+git clone https://github.com/dansalias/iamdan.me
+cd iamdan.me
 npm install
 npm run dev
 ```
