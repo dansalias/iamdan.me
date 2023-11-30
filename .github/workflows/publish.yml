@@ -21,9 +21,11 @@ jobs:
           node-version: '18'
           cache: 'npm'
 
-      - run: |
-          npm ci
-          npm run build
+      - run: npm ci
+
+      - run: npx playwright install --with-deps chromium
+
+      - run: npm run build
 
       - uses: actions/upload-pages-artifact@v2
         with:
