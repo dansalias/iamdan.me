@@ -2,13 +2,18 @@
   "name": "iamdan.me",
   "private": true,
   "version": "0.0.0",
+  "workspaces": [
+    "resume"
+  ],
   "scripts": {
     "dev": "vite",
-    "build": "vite build"
+    "dev:resume": "vite ./resume",
+    "build": "vite build ./resume && npx tsx ./resume/script.create-pdf.ts && vite build"
   },
   "devDependencies": {
     "@types/node": "^20.8.5",
     "autoprefixer": "^10.4.16",
+    "marked": "^11.0.0",
     "postcss": "^8.4.31",
     "tailwindcss": "^3.3.3",
     "tsx": "^4.6.1",

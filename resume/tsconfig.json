@@ -1,0 +1,14 @@
+{
+  "extends": [
+    "@tsconfig/node18/tsconfig.json",
+    "@vue/tsconfig/tsconfig.json"
+  ],
+  "include": ["./env.d.ts", "./**/*.vue", "./data.ts"],
+  "compilerOptions": {
+    "composite": true,
+    "baseUrl": ".",
+    "module": "ESNext",
+    "moduleResolution": "node",
+    "types": ["node", "vite/client"]
+  }
+}

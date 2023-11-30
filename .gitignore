@@ -1,2 +1,4 @@
 .build
+.tmp
+public
 node_modules
