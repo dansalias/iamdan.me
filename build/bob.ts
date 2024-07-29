@@ -22,10 +22,12 @@ interface Output {
 type BuilderFunction = (source: Source, output: Output) => void | Promise<void>
 
 const subscriptions: Map<string, BuilderFunction[]> = new Map()
+const builderFunctions: BuilderFunction[] = []
 
 export const bob = {
   add: async (builderFunction: BuilderFunction) => {
     console.log('adding builder function...')
+    builderFunctions.push(builderFunction)
     await builderFunction(
       {
         get: async (filepath) => {
@@ -63,7 +65,7 @@ export const bob = {
   },
   run: (builderFunction: BuilderFunction) => {
     console.log('running builder function...')
-    builderFunction(
+    return builderFunction(
       {
         get: async (filepath) => ({
           filepath: path.join(__dirname, '..', filepath),
@@ -85,5 +87,10 @@ export const bob = {
         },
       }
     )
+  },
+  build: () => {
+    return Promise.all(builderFunctions.map(builderFunction => {
+      bob.run(builderFunction)
+    }))
   },
 }
