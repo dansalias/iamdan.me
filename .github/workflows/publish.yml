@@ -27,9 +27,11 @@ jobs:
 
       - run: npx tsx ./build/build.ts
 
+      - run: tree .build
+
       - uses: actions/upload-pages-artifact@v3
         with:
-          path: './.build'
+          path: '.build'
 
   deploy:
     runs-on: ubuntu-latest
