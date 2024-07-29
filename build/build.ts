@@ -4,7 +4,10 @@ import './project'
 (async () => {
   await bob.build()
 
-  console.log('build complete')
+  setTimeout(() => {
+    console.log('build complete')
 
-  process.exit()
+    process.exit()
+  }, 2000)
+
 })()
