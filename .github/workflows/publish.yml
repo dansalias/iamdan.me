@@ -27,7 +27,7 @@ jobs:
 
       - run: npx tsx ./build/build.ts
 
-      - uses: actions/upload-pages-artifact@v2
+      - uses: actions/upload-pages-artifact@v3
         with:
           path: './.build'
 
