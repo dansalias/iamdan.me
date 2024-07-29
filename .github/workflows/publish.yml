@@ -23,6 +23,8 @@ jobs:
 
       - run: npm ci
 
+      - run: mkdir .build
+
       - run: npx tsx ./build/build.ts
 
       - uses: actions/upload-pages-artifact@v2
