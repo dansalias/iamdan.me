@@ -70,5 +70,6 @@ bob.add(async (source, output) => {
   ;(await source.getAll([
     './style.css',
     './articles/!(*.md)',
+    './resume/daniel-young-résumé.pdf',
   ])).forEach(({ filepath, data }) => output.write(filepath, data))
 })
