@@ -3,6 +3,8 @@ import { bob, Source } from './bob'
 import frontmatter from 'front-matter'
 import * as handlebars from 'handlebars'
 import * as marked from 'marked'
+import { createDirectives as markedDirectives } from 'marked-directive'
+import markedFootnote from 'marked-footnote'
 
 const buildHTMLPage = async (
   source: Source,
@@ -12,7 +14,10 @@ const buildHTMLPage = async (
   }
 ) => handlebars.compile((await source.get('./templates/base.hbs')).data.toString())(data)
 
-marked.use({
+marked.use(
+  markedDirectives(),
+  markedFootnote(),
+  {
   renderer: {
     image: (src, title, alt) => `
       <figure>

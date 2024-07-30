@@ -80,11 +80,21 @@ figcaption {
   font-style: italic;
 }
 
+aside {
+  border-top: 1px dotted #a7a7a7;
+  border-bottom: 1px dotted #a7a7a7;
+  padding: 1rem 1rem 0;
+}
+
 pre {
   overflow-x: auto;
   background: #d7d7d7;
   padding: 1rem;
   border-radius: 0.5rem;
+}
+
+p sup a {
+  border: none;
 }
 
 code {
@@ -108,6 +118,10 @@ header .links {
 h1 {
   font-weight: 300;
   margin: 3rem 0 0.8rem;
+}
+
+h2 {
+  margin: 1.4rem 0 0;
 }
 
 .date {
