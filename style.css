@@ -139,7 +139,7 @@ a {
 }
 
 .articles {
-  list-style-type: '\1f852';
+  list-style-type: '>';
   margin: 0.8rem 0 0 1.6rem;
 }
 
