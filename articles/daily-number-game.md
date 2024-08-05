@@ -7,7 +7,7 @@ In response to the popularity of
 [Wordle](https://www.nytimes.com/games/wordle/index.html) I created
 [Numble](https://numble.game/) for the more numerically inclined.
 
-My first idea for serving a new daily game was to prepoluate a database, but I
+My first idea for serving a new daily game was to prepopulate a database, but I
 found a more elegant solution which uses a hash of the current date to choose a
 target number and set of source numbers.
 
