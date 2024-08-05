@@ -14,7 +14,7 @@ target number and set of source numbers.
 The first part of the hash determines the target number, and the 6 source
 numbers are chosen by continuing along the hash.
 
-![Visualisation of picking game numbers by walking a hash of today's date](./daily-number-game.figure-1.png 'Building a daily game from a hash of the current date')
+![Visualisation of picking game numbers by walking a hash of today's date](./daily-number-game.figure-1.webp 'Building a daily game from a hash of the current date')
 
 There's some extra logic to limit repeats and include at least one big number,
 but this is essentially what happens whenever today's game is requested.
