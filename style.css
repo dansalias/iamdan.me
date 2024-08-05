@@ -75,7 +75,7 @@ figure img {
 figcaption {
   margin: 0.8rem 0;
   text-align: center;
-  color: #777777;
+  color: #6e6e6e;
   font-size: 0.94rem;
   font-style: italic;
 }
@@ -126,7 +126,7 @@ h2 {
 
 .date {
   margin: 0;
-  color: #777777;
+  color: #6e6e6e;
 }
 
 p {
