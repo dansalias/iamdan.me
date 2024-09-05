@@ -1,6 +1,7 @@
 ---
 title: Better Dotfiles
 date: 2024-09-10
+hn: 41453264
 ---
 
 Whilst reorganising my dotfiles I avoided superfluous dotfile managers and

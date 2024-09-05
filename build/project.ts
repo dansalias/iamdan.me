@@ -38,6 +38,7 @@ bob.add(async (source, output) => {
         ...frontmatter<{
           date: string
           title: string
+          hn?: string
         }>(file.data.toString())
       }))
       .sort((a, b) => new Date(b.attributes.date).valueOf() - new Date(a.attributes.date).valueOf())

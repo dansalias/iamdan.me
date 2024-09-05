@@ -197,3 +197,7 @@ ul li {
 strong {
   font-weight: bold;
 }
+
+.comments {
+  margin: 0 0 2.4rem;
+}
