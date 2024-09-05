@@ -1,6 +1,7 @@
 ---
 title: A Daily Game Without a Database
 date: 2022-03-12
+hn: 41453335
 ---
 
 In response to the popularity of
