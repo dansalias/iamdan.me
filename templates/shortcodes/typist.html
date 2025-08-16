@@ -1,0 +1,63 @@
+<span id="typist"></span>
+
+<script>
+  const
+    CURSOR_BLINK_RATE = 600,
+    INPUT_RATE = 40,
+    spanElement = document.getElementById('typist'),
+    input = "{{ string | safe }}",
+    parsed = [],
+    regex = /<([^:>]+):([^>]+)>|([^<]+)/g
+
+  let match
+
+  while ((match = regex.exec(input)) !== null) {
+    if (match[1] && match[2]) {
+      const
+        command = match[1],
+        value = isNaN(match[2]) ? match[2] : Number(match[2])
+
+      parsed.push([command, value])
+    } else {
+      parsed.push(['t', match[3]])
+    }
+  }
+
+  const pause = (timeInMs) =>
+    new Promise(resolve =>
+      setTimeout(resolve, timeInMs)
+    )
+
+  const cursorInterval = setInterval(() => {
+    spanElement.classList.toggle('show-cursor')
+  }, CURSOR_BLINK_RATE)
+
+  const animate = async () => {
+    for (let [command, value] of parsed) {
+      if (command === 'p') {
+        await pause(value)
+      } else {
+        for (let char of value.split('')) {
+          spanElement.innerHTML += char
+
+          await pause(INPUT_RATE)
+        }
+      }
+    }
+
+    clearInterval(cursorInterval)
+    spanElement.classList.remove('show-cursor')
+  }
+
+  animate()
+</script>
+
+<style>
+  #typist:empty::before {
+    content: '\200b';
+  }
+
+  .show-cursor {
+    border-right: 1px solid #000000;
+  }
+</style>

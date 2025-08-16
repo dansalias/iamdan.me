@@ -8,7 +8,7 @@ distribution list for a particular domain.
 
 Bash example:
 
-```
+```sh
 # get the CloudFront Id
 CF_DISTRIBUTION_ID=$(aws cloudfront list-distributions \
   --query "DistributionList.Items[?contains(Aliases.Items[0], "example.com")] | [0].Id" \

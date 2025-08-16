@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+
+{% block content %}
+  {% set intro = load_data(path="templates/partials/intro.md") %}
+  {{ intro | markdown | safe }}
+
+  {% include "partials/socials.html" %}
+
+  <h2>Thoughts &amp; Snippets</h2>
+
+  <ul class="articles">
+    {% for article in section.pages %}
+      <li>
+        <a href="{{ article.slug | safe }}">
+          {{ article.title }}
+        </a>
+        <div class="date">
+          {{ article.date | date(format="%b %Y") }}
+        </div>
+      </li>
+    {% endfor %}
+  </ul>
+
+  <style>
+    .articles {
+      margin: 0 1rem;
+
+      display: flex;
+      flex-direction: column;
+      gap: 0.8rem;
+
+      list-style-type: '›';
+
+      li {
+        padding: 0 0 0 0.6rem;
+      }
+    }
+
+    .date {
+      margin: 0.2rem 0;
+
+      font-size: 0.9em;
+
+      opacity: 0.7;
+    }
+  </style>
+{% endblock content %}

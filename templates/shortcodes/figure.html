@@ -1,0 +1,10 @@
+<figure>
+  <img src="{{ src }}" alt="{{ alt }}" />
+  <figcaption>
+    {% if caption %}
+      {{ caption }}
+    {% else %}
+      {{ alt }}
+    {% endif %}
+  </figcaption>
+</figure>

@@ -1,8 +1,15 @@
----
-title: Better Dotfiles
-date: 2024-09-10
-hn: 41453264
----
++++
+title = "Better Dotfiles"
+date = 2024-09-10
+
+[extra]
+hn = 41453264
++++
+
+{{ video(
+  src="better-dotfiles/demo.mp4",
+  caption="Demo of my dotfile workflow"
+) }}
 
 Whilst reorganising my dotfiles I avoided superfluous dotfile managers and
 the limitations of the "version control $HOME" method by instead including
@@ -21,8 +28,6 @@ Examples:
 # ln /etc/X11/xorg.conf.d/00-keyboard.conf
 ```
 
-<br/>
-
 The files can be scanned and symlinks can be created with some awk magic:
 
 ```bash
@@ -31,8 +36,6 @@ find ~/dotfiles -type f \
     system("ln -sf " FILENAME $3)
   }' {}
 ```
-
-<br/>
 
 If we change our awk to just print, add a substitution for `~`, ignore the
 `.git` directory when searching for files and package everything up in a
@@ -46,8 +49,6 @@ list_symlinks () {
     | sed "s|^./|$(pwd)/|;s|~|$HOME|"
 }
 ```
-
-<br/>
 
 `list_symlinks` can then be piped into awk to create utility commands for
 managing symlinks:
@@ -63,8 +64,6 @@ list_symlinks | awk '{system("rm " $2)}'
 list_symlinks | awk '{ print $2 " -> " $1 }' | column -t
 ```
 
-<br/>
-
 Using `readlink` we can enhance our symlink list to show broken symlinks:
 
 ```bash
@@ -77,14 +76,24 @@ echo -e "$( \
 
 Example output:
 
-<code class="block">
-  <div style="color: #090; white-space: pre;">✓ ~/.i3/config -&gt; ~/dotfiles/i3/config</div>
-  <div style="color: #090; white-space: pre;">✓ ~/.zshrc     -&gt; ~/dotfiles/zsh/.zshrc</div>
-  <div style="color: #f22; white-space: pre;">✗ ~/.xinitrc   -&gt; ~/dotfiles/x/.xinitrc</div>
-  <div style="color: #f22; white-space: pre;">✗ ~/.gitconfig -&gt; ~/dotfiles/git/.gitconfig</div>
-</code>
+<!--
+```
+✓ ~/.i3/config -&gt; ~/dotfiles/i3/config       [!green]
+✓ ~/.zshrc     -&gt; ~/dotfiles/zsh/.zshrc      [!green]
+✗ ~/.xinitrc   -&gt; ~/dotfiles/x/.xinitrc      [!red]
+✗ ~/.gitconfig -&gt; ~/dotfiles/git/.gitconfig  [!red]
+```
+-->
 
-<br/>
+<!-- move to shortcode -->
+<pre style="white-space: normal; background: #fcf0ca">
+  <code style="white-space: normal;">
+    <div style="color: #090;">✓ ~/.i3/config -&gt; ~/dotfiles/i3/config</div>
+    <div style="color: #090;">✓ ~/.zshrc     -&gt; ~/dotfiles/zsh/.zshrc</div>
+    <div style="color: #f22;">✗ ~/.xinitrc   -&gt; ~/dotfiles/x/.xinitrc</div>
+    <div style="color: #f22;">✗ ~/.gitconfig -&gt; ~/dotfiles/git/.gitconfig</div>
+  </code>
+</pre>
 
 We can also use the power of awk to remove old links when we update our files
 (this sits nicely in a git post-commit hook).
@@ -96,8 +105,6 @@ git diff HEAD~ | awk '/\-\S*\s+ln/ {
   }
 } { prevLine=$0 }'
 ```
-
-<br/>
 
 See [my dotfiles](https://github.com/dansalias/dotfiles) for a full script which
 includes escalating with `sudo` when required.

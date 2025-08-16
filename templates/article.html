@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+
+{% macro home() %}
+<a href="/">
+  &lsaquo; Home
+</a>
+{% endmacro home %}
+
+
+{% block header %}
+  {{ self::home() }}
+{% endblock header %}
+
+{% block content %}
+  <article>
+    <h1>{{ page.title }}</h1>
+    <div class="date">{{ page.date | date(format="%B %Y") }}</div>
+
+    {{ page.content | safe }}
+  </article>
+{% endblock content %}
+
+{% block footer %}
+  {% if page.extra.hn %}
+    <a
+      target="_blank"
+      href="https://news.ycombinator.com/item?id={{ page.extra.hn }}"
+    >
+      &raquo; Comments on HN
+    </a>
+  {% endif %}
+  {{ self::home() }}
+{% endblock footer %}

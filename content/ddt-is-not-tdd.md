@@ -12,7 +12,7 @@ test-worthy.
 Or worse we'd ship with no/minimal coverage and then add tests to critical
 and/or failing paths as they arose.
 
-This is development-driven-testing, not test-driven-development.
+**This is development-driven-testing, not test-driven-development.**
 
 Test-driven development involves building software in three steps (commonly
 summarised as red, green, refactor):

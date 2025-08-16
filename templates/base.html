@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0">
+    <meta name="description" content="I am Dan, full stack software engineer.">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Google+Sans+Code:ital@0;1&family=Merriweather:ital,opsz,wght@0,18..144,300,600;1,18..144,300,600&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="/style.css" />
+    <title>I am Dan</title>
+  </head>
+  <body>
+    <div id="container">
+      <header>
+        {% block header %} {% endblock header %}
+      </header>
+      <main>
+        {% block content %} {% endblock content %}
+      </main>
+      <footer>
+        {% block footer %} {% endblock footer %}
+      </footer>
+    </div>
+  </body>
+</html>

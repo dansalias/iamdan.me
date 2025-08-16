@@ -5,7 +5,11 @@ date: 2020-04-10
 
 We've all seen one of these:
 
-![Pull request with many changed lines](./lockfiles-git-lfs.figure-1.webp 'Somebody\'s been busy')
+{{ figure(
+  src="lockfiles-git-lfs/lockfiles-git-lfs.figure-1.webp",
+  alt="Pull request with many changed lines",
+  caption="Somebody's been busy"
+) }}
 
 On closer inspection it's revealed that the pull request is a simple dependency
 update and most of the changes are in a lockfile (e.g. `package-lock.json`).

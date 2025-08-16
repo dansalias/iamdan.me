@@ -13,34 +13,7 @@ jobs:
 
     steps:
       - uses: actions/checkout@v4
-        with:
-          lfs: true
 
-      - uses: actions/setup-node@v4
-        with:
-          node-version: '22'
-          cache: 'npm'
-
-      - run: npm ci
-
-      - run: mkdir .build
-
-      - run: npx tsx ./build/build.ts
-
-      - run: tree .build
-
-      - uses: actions/upload-pages-artifact@v3
-        with:
-          path: '.build'
-
-  deploy:
-    runs-on: ubuntu-latest
-
-    needs: build
-
-    permissions:
-      pages: write
-      id-token: write
-
-    steps:
-      - uses: actions/deploy-pages@v4
+      - uses: shalzz/zola-deploy-action@master
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

@@ -3,13 +3,13 @@ title: You Probably Don't Need UUIDs
 date: 2021-10-10
 ---
 
-:::aside
-### What's a UUID?
+{% aside() %}
+  ### What's a UUID?
 
-A UUID is a 128-bit 'universally unique identifier', typically represented as a
-36-character hyphenated hex string (e.g. `01234567-89ab-cdef-0123-456789abcdef`).
-[Wikipedia](https://en.wikipedia.org/wiki/Universally_unique_identifier)
-:::
+  A UUID is a 128-bit 'universally unique identifier', typically represented as a
+  36-character hyphenated hex string (e.g. `01234567-89ab-cdef-0123-456789abcdef`).
+  [&raquo; Wikipedia](https://en.wikipedia.org/wiki/Universally_unique_identifier)
+{% end %}
 
 UUIDs are great. There are packages to generate them in every major language and
 generating 1 million (v4) every second it will take ~83,000 years until there's
