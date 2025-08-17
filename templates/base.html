@@ -10,7 +10,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Google+Sans+Code:ital@0;1&family=Merriweather:ital,opsz,wght@0,18..144,300,600;1,18..144,300,600&display=swap" rel="stylesheet">
 
     <link rel="stylesheet" href="/style.css" />
-    <title>I am Dan</title>
+    <title>{% if page.title %}{{ page.title }} | {% endif %}I am Dan</title>
   </head>
   <body>
     <div id="container">
