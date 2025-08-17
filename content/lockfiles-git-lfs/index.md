@@ -6,7 +6,7 @@ date: 2020-04-10
 We've all seen one of these:
 
 {{ figure(
-  src="lockfiles-git-lfs/lockfiles-git-lfs.figure-1.webp",
+  src="lockfiles-git-lfs.figure-1.webp",
   alt="Pull request with many changed lines",
   caption="Somebody's been busy"
 ) }}

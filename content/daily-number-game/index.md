@@ -16,7 +16,7 @@ The first part of the hash determines the target number, and the 6 source
 numbers are chosen by continuing along the hash.
 
 {{ figure(
-  src="daily-number-game/daily-number-game.figure-1.webp",
+  src="daily-number-game.figure-1.webp",
   alt="Visualisation of picking game numbers by walking a hash of today's date",
   caption="Building a daily game from a hash of the current date"
 ) }}

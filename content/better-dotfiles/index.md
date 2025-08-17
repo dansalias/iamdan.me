@@ -7,7 +7,7 @@ hn = 41453264
 +++
 
 {{ video(
-  src="better-dotfiles/demo.mp4",
+  src="demo.mp4",
   caption="Demo of my dotfile workflow"
 ) }}
 
