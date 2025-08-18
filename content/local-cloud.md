@@ -1,6 +1,9 @@
 +++
 date = 2025-08-05
 title = "Local Cloud Emulation"
+
+[extra]
+hn = 44940393
 +++
 
 Simulating production environments locally often results in a collection of
