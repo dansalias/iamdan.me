@@ -5,11 +5,11 @@ title = "Local Cloud Emulation"
 
 Simulating production environments locally often results in a collection of
 opaque containers and third-party "local cloud" emulators. This is a symptom of
-adapting your system to fit the cloud, rather than the other way 'round.
+the system adapting to fit the cloud, rather than the other way 'round.
 
 The goal shouldn't be to mimick the production environment as closely as
-possible—staging or multiple production mirrors serve this purpose—but rather
-to enable the best possible local development experience (typified by
+possible---staging or multiple production mirrors serve this purpose---but
+rather to enable the best possible local development experience (typified by
 transparency and instant feedback).
 
 Adopting a _local first_ approach not only improves DX, but also engenders a
