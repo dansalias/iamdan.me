@@ -133,24 +133,52 @@ platform
 
 Local integration and end-to-end testing is now much simpler.
 
-<!--
-You can add logging for transparent real-time development:
+Introducing auxillary functionality such as logging is trivial:
 
 ```ts
-// ...
+export interface Logger {
+  log: (message: string) => void | Promise<void>
+}
 ```
 
-And shift left on production logging at the same time:
+```ts
+import { Logger } from '@/adapters'
+
+export class LocalLogger implements Logger {
+  log(message) {
+    console.log(message)
+  }
+}
+```
+
+And shifting left on production logging is encouraged at the same time:
 
 ```ts
-// ...
+import { Logger } from '@/adapters'
+import {
+  CloudWatchLogsClient,
+  PutLogEventsCommand,
+} from "@aws-sdk/client-cloudwatch-logs"
+
+export class AWSLogger implements Logger {
+  private client: CloudWatchLogsClient
+
+  async log(message) {
+    await client.send(new PutLogEventsCommand({
+      logGroupName: process.env.AWS_LOG_GROUP_NAME,
+      logStreamName: process.env.LOG_STREAM_NAME,
+      logEvents: [{
+        message,
+        timestamp: Date.now(),
+      }]
+    }))
+  }
+}
 ```
 
 The code and mindset shift from cloud APIs as a base layer to the cloud as a
 _dependency_ is powerful, and many of these "shift left" opportunities present
-themselves once you own the platform and can take advantage of the speed of local
-development.
--->
-
+themselves once the local environment becomes the reference platform
+implementation.
 
 Try it out!
