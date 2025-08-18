@@ -3,11 +3,19 @@ date = 2025-08-05
 title = "Local Cloud Emulation"
 +++
 
-Mimicking production environments locally is often attempted by stringing
-together a bunch of opaque containers and third-party "local cloud" tools.
+Simulating production environments locally often results in a collection of
+opaque containers and third-party "local cloud" emulators. This is a symptom of
+adapting your system to fit the cloud, rather than the other way 'round.
 
-It's worth exploring simply creating in-memory versions of platform services
-instead. While daunting at first, it ends up being much simpler than expected.
+The goal shouldn't be to mimick the production environment as closely as
+possible—staging or multiple production mirrors serve this purpose—but rather
+to enable the best possible local development experience (typified by
+transparency and instant feedback).
+
+Adopting a _local first_ approach not only improves DX, but also engenders a
+more flexible, cloud-agnostic system. This can be achieved by building in-memory
+versions of platform services. While daunting at first, it ends up being much
+simpler than expected.
 
 Here's an in-memory event bus in 24 lines of TypeScript:
 
