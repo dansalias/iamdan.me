@@ -174,3 +174,9 @@ footer {
   flex-direction: column;
   gap: 2rem;
 }
+
+.katex-display {
+  padding: 1rem 0 2rem;
+
+  overflow-x: auto;
+}

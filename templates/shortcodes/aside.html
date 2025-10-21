@@ -1,3 +1,7 @@
 <aside>
-  {{ body | markdown | safe }}
+  {% if inline %}
+    {{ body | markdown(inline=true) | safe }}
+  {% else %}
+    {{ body | markdown | safe }}
+  {% endif %}
 </aside>
