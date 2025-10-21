@@ -1,7 +1,7 @@
----
-title: DDT is not TDD
-date: 2019-11-15
----
++++
+title = "DDT is not TDD"
+date = 2019-11-15
++++
 
 I've worked with more than one team where we claimed to practice
 [test-driven-development](https://en.wikipedia.org/wiki/Test-driven_development).

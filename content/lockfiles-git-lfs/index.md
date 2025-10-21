@@ -1,7 +1,7 @@
----
-title: Tracking Lockfiles With git-lfs
-date: 2020-04-10
----
++++
+title = "Tracking Lockfiles With git-lfs"
+date = 2020-04-10
++++
 
 We've all seen one of these:
 

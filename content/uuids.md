@@ -1,7 +1,7 @@
----
-title: You Probably Don't Need UUIDs
-date: 2021-10-10
----
++++
+title = "You Probably Don't Need UUIDs"
+date = 2021-10-10
++++
 
 {% aside() %}
   ### What's a UUID?
