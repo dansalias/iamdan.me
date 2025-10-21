@@ -84,7 +84,7 @@ article {
     text-underline-offset: 0.1em;
   }
 
-  img {
+  img, video {
     max-width: 100%;
   }
 
