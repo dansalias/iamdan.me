@@ -5,6 +5,7 @@ date = 2025-10-21
 [extra]
 math = true
 alpine = true
+hn = 45671434
 +++
 
 <script>
