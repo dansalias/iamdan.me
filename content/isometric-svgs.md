@@ -200,6 +200,34 @@ alpine = true
 
 <svg width="0" height="0" viewBox="-64 -46 128 92" x-data>
   <defs>
+    <filter id="brightness-60">
+      <feComponentTransfer>
+        <feFuncR type="linear" slope="0.6"/>
+        <feFuncG type="linear" slope="0.6"/>
+        <feFuncB type="linear" slope="0.6"/>
+      </feComponentTransfer>
+    </filter>
+    <filter id="brightness-70">
+      <feComponentTransfer>
+        <feFuncR type="linear" slope="0.7"/>
+        <feFuncG type="linear" slope="0.7"/>
+        <feFuncB type="linear" slope="0.7"/>
+      </feComponentTransfer>
+    </filter>
+    <filter id="brightness-80">
+      <feComponentTransfer>
+        <feFuncR type="linear" slope="0.8"/>
+        <feFuncG type="linear" slope="0.8"/>
+        <feFuncB type="linear" slope="0.8"/>
+      </feComponentTransfer>
+    </filter>
+    <filter id="brightness-90">
+      <feComponentTransfer>
+        <feFuncR type="linear" slope="0.9"/>
+        <feFuncG type="linear" slope="0.9"/>
+        <feFuncB type="linear" slope="0.9"/>
+      </feComponentTransfer>
+    </filter>
     <g>
       <radialGradient id="feather" cx="50%" cy="50%" r="50%">
         <stop offset="0%" stop-color="#ffffff" stop-opacity="1"/>
@@ -1105,10 +1133,24 @@ normal planes.
       <rect :x="-u" :y="-u / 2" :width="2 * u" :height="u" fill="orange"/>
     </g>
     <g :transform="`matrix(${cos}, ${sin}, 0, 1, ${-cos * u / 2}, ${sin * u / 2})`">
-      <rect :x="-u" :y="-0.6 * u" :width="2 * u" :height="u" fill="orange" style="filter: brightness(0.9)"/>
+      <rect
+        :x="-u"
+        :y="-0.6 * u"
+        :width="2 * u"
+        :height="u"
+        fill="orange"
+        filter="url(#brightness-90)"
+      />
     </g>
     <g :transform="`matrix(${cos}, ${-sin}, 0, 1, ${cos * u}, ${sin * u})`">
-      <rect :x="-u / 2" :y="-0.6 * u" :width="u" :height="u" fill="orange" style="filter: brightness(0.8)"/>
+      <rect
+        :x="-u / 2"
+        :y="-0.6 * u"
+        :width="u"
+        :height="u"
+        fill="orange"
+        filter="url(#brightness-80)"
+      />
     </g>
   </svg>
 </figure>
@@ -1160,7 +1202,7 @@ const
     <use href="#bg-3d"/>
     <g x-data="pyramid">
       <polygon fill="orange" :points="front"/>
-      <polygon fill="orange" :points="right" style="filter: brightness(0.9)"/>
+      <polygon fill="orange" :points="right" filter="url(#brightness-90)"/>
     </g>
   </svg>
 </figure>
@@ -1201,7 +1243,7 @@ horizontal axis places the subject in isometric projection.
         id="bottom"
         opacity="0.4"
         :transform="`matrix(${matrices.xy(0)})`"
-        style="filter: brightness(0.6)"
+        filter="url(#brightness-60)"
       >
         <rect x="0" y="0" :width="u" :height="u" fill="orange"/>
       </g>
@@ -1209,16 +1251,30 @@ horizontal axis places the subject in isometric projection.
         id="back"
         opacity="0.4"
         :transform="`matrix(${matrices.xz(0)})`"
-        style="filter: brightness(0.7)"
+        filter="url(#brightness-70)"
       >
-        <rect x="0" :y="-u" :width="u" :height="u" fill="orange" style="filter: brightness(0.9)"/>
+        <rect
+          x="0"
+          :y="-u"
+          :width="u"
+          :height="u"
+          fill="orange"
+          filter="url(#brightness-90)"
+        />
       </g>
       <g
         id="left"
         opacity="0.4"
         :transform="`matrix(${matrices.yz(0)})`"
       >
-        <rect :x="-u" :y="-u" :width="u" :height="u" fill="orange" style="filter: brightness(0.8)"/>
+        <rect
+          :x="-u"
+          :y="-u"
+          :width="u"
+          :height="u"
+          fill="orange"
+          filter="url(#brightness-80)"
+        />
       </g>
       <g
         id="top"
@@ -1232,7 +1288,14 @@ horizontal axis places the subject in isometric projection.
         opacity="0.8"
         :transform="`matrix(${matrices.yz(u)})`"
       >
-        <rect :x="-u" :y="-u" :width="u" :height="u" fill="orange" style="filter: brightness(0.8)"/>
+        <rect
+          :x="-u"
+          :y="-u"
+          :width="u"
+          :height="u"
+          fill="orange"
+          filter="url(#brightness-80)"
+        />
       </g>
       <g
         :transform="`matrix(${matrices.vertical})`"
@@ -1253,7 +1316,14 @@ horizontal axis places the subject in isometric projection.
         opacity="0.8"
         :transform="`matrix(${matrices.xz(u)})`"
       >
-        <rect x="0" :y="-u" :width="u" :height="u" fill="orange" style="filter: brightness(0.9)"/>
+        <rect
+          x="0"
+          :y="-u"
+          :width="u"
+          :height="u"
+          fill="orange"
+          filter="url(#brightness-90)"
+        />
       </g>
     </g>
   </svg>
@@ -1342,24 +1412,44 @@ viewing angle:
         id="bottom"
         opacity="0.4"
         :transform="`matrix(${matrices(azimuth, elevation).xy(-u / 2)})`"
-        style="filter: brightness(0.6)"
       >
-        <rect :x="-u / 2" :y="-u / 2" :width="u" :height="u" fill="orange"/>
+        <rect
+          :x="-u / 2"
+          :y="-u / 2"
+          :width="u"
+          :height="u"
+          fill="orange"
+          filter="url(#brightness-60)"
+        />
       </g>
       <g
         id="back"
         opacity="0.4"
         :transform="`matrix(${matrices(azimuth, elevation).xz(-u / 2)})`"
-        style="filter: brightness(0.7)"
+        filter="url(#brightness-70)"
       >
-        <rect :x="-u / 2" :y="-u / 2" :width="u" :height="u" fill="orange" style="filter: brightness(0.9)"/>
+        <rect
+          :x="-u / 2"
+          :y="-u / 2"
+          :width="u"
+          :height="u"
+          fill="orange"
+          filter="url(#brightness-90)"
+        />
       </g>
       <g
         id="left"
         opacity="0.4"
         :transform="`matrix(${matrices(azimuth, elevation).yz(-u / 2)})`"
       >
-        <rect :x="-u / 2" :y="-u / 2" :width="u" :height="u" fill="orange" style="filter: brightness(0.8)"/>
+        <rect
+          :x="-u / 2"
+          :y="-u / 2"
+          :width="u"
+          :height="u"
+          fill="orange"
+          filter="url(#brightness-80)"
+        />
       </g>
       <g
         id="top"
@@ -1373,14 +1463,28 @@ viewing angle:
         opacity="0.8"
         :transform="`matrix(${matrices(azimuth, elevation).xz(u / 2)})`"
       >
-        <rect :x="-u / 2" :y="-u / 2" :width="u" :height="u" fill="orange" style="filter: brightness(0.9)"/>
+        <rect
+          :x="-u / 2"
+          :y="-u / 2"
+          :width="u"
+          :height="u"
+          fill="orange"
+          filter="url(#brightness-90)"
+        />
       </g>
       <g
         id="right"
         opacity="0.8"
         :transform="`matrix(${matrices(azimuth, elevation).yz(u / 2)})`"
       >
-        <rect :x="-u / 2" :y="-u / 2" :width="u" :height="u" fill="orange" style="filter: brightness(0.8)"/>
+        <rect
+          :x="-u / 2"
+          :y="-u / 2"
+          :width="u"
+          :height="u"
+          fill="orange"
+          filter="url(#brightness-80)"
+        />
       </g>
     </g>
   </svg>
