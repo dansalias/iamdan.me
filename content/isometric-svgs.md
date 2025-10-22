@@ -193,6 +193,11 @@ alpine = true
         writing-mode: vertical-lr;
         direction: rtl;
 
+        input[type="range"] {
+          appearance: slider-vertical;
+          width: 1rem;
+        }
+
         label {
           left: 1.5rem;
         }
