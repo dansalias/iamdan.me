@@ -126,36 +126,36 @@ alpine = true
   svg {
     width: 100%;
     max-width: 25rem;
+  }
 
-    line {
-      stroke: #000000bb;
-      stroke-width: 1;
-      stroke-linecap: round;
+  line {
+    stroke: #000000bb;
+    stroke-width: 1;
+    stroke-linecap: round;
 
-      &.guideline {
-        stroke-width: 0.4;
-        stroke-dasharray: 2;
-        stroke: #00000022;
-      }
-
-      &.extension {
-        stroke-width: 0.4;
-        stroke: #000000;
-      }
+    &.guideline {
+      stroke-width: 0.4;
+      stroke-dasharray: 2;
+      stroke: #00000022;
     }
 
-    text {
-      font: 0.8rem KaTeX_Math, serif;
-      text-anchor: middle;
-      dominant-baseline: middle;
+    &.extension {
+      stroke-width: 0.4;
+      stroke: #000000;
+    }
+  }
 
-      &.small {
-        font-size: 0.6rem;
-      }
+  text {
+    font: 0.8rem KaTeX_Math, serif;
+    text-anchor: middle;
+    dominant-baseline: middle;
 
-      &.x-small {
-        font-size: 0.4rem;
-      }
+    &.small {
+      font-size: 0.6rem;
+    }
+
+    &.x-small {
+      font-size: 0.4rem;
     }
   }
 
