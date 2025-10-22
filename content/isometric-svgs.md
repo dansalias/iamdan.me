@@ -166,16 +166,19 @@ alpine = true
 
     display: grid;
     grid-template: auto 2rem / auto 4rem;
+    justify-items: center;
+    align-items: center;
 
     svg {
       width: 100%;
     }
 
     .slider {
-      margin: auto;
-      max-width: 8rem;
-      max-height: 8rem;
       position: relative;
+
+      display: flex;
+      justify-content: center;
+      align-items: center;
 
       label {
         position: absolute;
