@@ -9,6 +9,7 @@ The [iamdan.me](https://iamdan.me) website.
 - icons:
   - github/linkedin: respective copyright owners
   - man in tie: custom
+- résumé built with [Typst](https://typst.app/docs/)
 - license:
   - prose: Copyright &copy; Daniel Young
   - theme & code samples: MIT
