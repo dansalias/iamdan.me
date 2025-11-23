@@ -9,6 +9,7 @@
   font: "Merriweather",
   weight: "light",
   size: 12pt,
+  tracking: 0.25pt,
 )
 
 #show heading: set block(
