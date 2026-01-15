@@ -125,8 +125,7 @@ Led backend development of the Weirdly SaaS application, creating culture-fit
 quizzes for multinational companies and 100,000+ candidates.
 
 - Architected and led a live migration from SQL to MongoDB.
-- Built the recurring billing system and accidentally double billed everyone
-  one month.
+- Built the recurring billing system and merchant banking integration.
 - Integrated AI sentiment analysis.
 
 == Qualifications
