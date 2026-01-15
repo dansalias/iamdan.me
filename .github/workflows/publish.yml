@@ -15,8 +15,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: install typst
-        run: cargo install typst-cli
+      - uses: typst-community/setup-typst@v4
 
       - name: compile résumé
         run: typst compile resume/resume.typ static/daniel-young-résumé.pdf
