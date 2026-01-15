@@ -9,12 +9,19 @@ on:
       - 'README.md'
 
 jobs:
-  build:
+  deploy:
     runs-on: ubuntu-latest
 
     steps:
       - uses: actions/checkout@v4
 
-      - uses: shalzz/zola-deploy-action@master
+      - name: install typst
+        run: cargo install typst-cli
+
+      - name: compile résumé
+        run: typst compile resume/resume.typ static/daniel-young-résumé.pdf
+
+      - name: zola deploy
+        uses: shalzz/zola-deploy-action@master
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
