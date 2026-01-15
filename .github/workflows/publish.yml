@@ -17,6 +17,14 @@ jobs:
 
       - uses: typst-community/setup-typst@v4
 
+      - name: install Merriweather font
+        run: |
+          mkdir -p ~/.local/share/fonts
+          curl -fsSL https://github.com/SorkinType/Merriweather/archive/refs/heads/master.zip -o merriweather.zip
+          unzip -q merriweather.zip
+          cp Merriweather-master/fonts/otf/*.otf ~/.local/share/fonts/
+          fc-cache -f -v
+
       - name: compile résumé
         run: typst compile resume/resume.typ static/daniel-young-résumé.pdf
 
