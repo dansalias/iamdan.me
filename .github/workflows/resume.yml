@@ -1,6 +1,7 @@
 name: compile-resume
 
 on:
+  workflow_dispatch:
   push:
     branches:
       - trunk
