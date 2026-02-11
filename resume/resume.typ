@@ -1,19 +1,20 @@
 #set page(
   margin: (
     x: 36pt,
-    y: 32pt,
+    top: 36pt,
+    bottom: 22pt,
   ),
 )
 
 #set text(
   font: "Merriweather",
   weight: "light",
-  size: 12pt,
-  tracking: 0.25pt,
+  size: 11.6pt,
+  tracking: 0.22pt,
 )
 
 #show heading: set block(
-  below: 18pt,
+  below: 16pt,
 )
 
 #show heading: set text(
@@ -22,16 +23,16 @@
 )
 
 #show heading.where(level: 2): set block(
-  above: 36pt,
-  below: 16pt,
+  above: 24pt,
+  below: 12pt,
 )
 
 #show heading.where(level: 2): set text(
-  size: 22pt,
+  size: 19pt,
 )
 
 #show heading.where(level: 3): set text(
-  size: 16pt,
+  size: 14pt,
 )
 
 #set par(
@@ -85,37 +86,42 @@ AWS.
 == Experience
 
 #exp(
-  [=== #strike(stroke: 1.4pt, extent: 1.2pt, offset: -5pt)[Unemployed] Sabbatical],
+  [=== #strike(stroke: 1.4pt, extent: 1.2pt, offset: -4pt)[Unemployed] Sabbatical],
   [April 2023],
   [present],
 )
 
 #v(5pt)
 
-Failed at 2 startup attempts. Travelled to 7 new countries. Currently learning
-Rust and experimenting with machine learning with a focus on better code
-generation.
+Failed at 2 startup attempts. Travelled to 7 new countries. Added Rust to the
+toolbox. Currently learning ML from the ground up and determined to help shape
+the future of software engineering for the better.
 
 #exp([=== Senior Frontend Engineer], [May 2019], [April 2023])
 
 LoveToKnow Media—Barcelona, Spain
 
-- Built news and reference products serving 100 million pageviews/month.
-- Managed a cross-product advertising library responsible for \$1million/month
-  revenue.
-- Updated sites and advertising integrations for GDPR compliance.
-- Migrated production sites to a centralised design system to ease product
-  workloads.
+- Consolidated 5 discrete advertising implementations into a single shared
+  library.
+- Led analytics and advertising updates for GDPR compliance.
+- Built a centralised design system to simplify and accelerate product
+  development.
+- Introduced real-time performance monitoring to keep up with Core Web Vitals
+  SEO ranking factors.
 
 #exp([=== Frontend Developer], [February 2016], [May 2019])
 
 Freelance—Auckland, New Zealand
 
-- Led frontend development of the YourDrive peer-to-peer car rental app
-  (discontinued).
-- Built the client dashboard for Quicksense Education.
-- Developed the user dashboard for MyBalance in partnership with Dow Goodfolk.
-- Built movieXchange with Phosphor Essence.
+Led frontend development of:
+
+- PrimePanels, creating a new website with interactive collection management.
+- YourDrive, a peer-to-peer car rental app (discontinued).
+- Quicksense Education dashboard, helping students master I/GCSE mathematics.
+- MyBalance, allowing thousands of farmers to interactively optimise soil
+  nutrients.
+- movieXchange, streamlining media distribution and ticketing for cinemas
+  worldwide.
 
 #exp([=== Backend Developer], [January 2015], [January 2016])
 
@@ -126,7 +132,7 @@ quizzes for multinational companies and 100,000+ candidates.
 
 - Architected and led a live migration from SQL to MongoDB.
 - Built the recurring billing system and merchant banking integration.
-- Integrated AI sentiment analysis.
+- Integrated AI sentiment analysis (back in 2015!).
 
 == Qualifications
 
@@ -151,7 +157,7 @@ quizzes for multinational companies and 100,000+ candidates.
 
 #align(center + bottom)[
   #set text(
-    size: 11pt,
+    size: 10pt,
   )
 
   #link("https://github.com/dansalias/iamdan.me/blob/trunk/resume/resume.typ")[
