@@ -1,24 +1,24 @@
 #set page(
   margin: (
-    x: 36pt,
-    top: 36pt,
-    bottom: 22pt,
+    x: 24pt,
+    top: 24pt,
+    bottom: 12pt,
   ),
 )
 
 #set text(
   font: "Merriweather",
   weight: "light",
-  size: 11.6pt,
-  tracking: 0.22pt,
+  size: 10.4pt,
+  tracking: 0.20pt,
 )
 
 #show heading: set block(
-  below: 16pt,
+  below: 12pt,
 )
 
 #show heading: set text(
-  size: 28pt,
+  size: 24pt,
   weight: "regular",
 )
 
@@ -37,7 +37,7 @@
 
 #set par(
   leading: 9pt,
-  spacing: 16pt,
+  spacing: 14pt,
 )
 
 #show link: set text(fill: rgb("#4287f5"))
