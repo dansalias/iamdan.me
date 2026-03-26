@@ -63,8 +63,8 @@
   [
     = Daniel Young
 
-    #text(size: 16pt)[
-      Full Stack Software Engineer
+    #text(size: 15pt)[
+      Software Engineer
     ]
   ],
   [
@@ -93,23 +93,21 @@ AWS.
 
 #v(5pt)
 
-Failed at 2 startup attempts. Travelled to 7 new countries. Added Rust to the
-toolbox. Currently learning ML from the ground up and determined to help shape
-the future of software engineering for the better.
+Failed at 2 startup attempts. Travelled to 7 new countries. Currently learning
+the full ML stack from warps to ops.
 
-#exp([=== Senior Frontend Engineer], [May 2019], [April 2023])
+#exp([=== Senior Software Engineer], [May 2019], [April 2023])
 
 LoveToKnow Media—Barcelona, Spain
 
-- Consolidated 5 discrete advertising implementations into a single shared
-  library.
+- Created and managed the cross-product monetisation stack.
 - Led analytics and advertising updates for GDPR compliance.
 - Built a centralised design system to simplify and accelerate product
   development.
 - Introduced real-time performance monitoring to keep up with Core Web Vitals
   SEO ranking factors.
 
-#exp([=== Frontend Developer], [February 2016], [May 2019])
+#exp([=== Software Engineer], [February 2016], [May 2019])
 
 Freelance—Auckland, New Zealand
 
@@ -123,7 +121,7 @@ Led frontend development of:
 - movieXchange, streamlining media distribution and ticketing for cinemas
   worldwide.
 
-#exp([=== Backend Developer], [January 2015], [January 2016])
+#exp([=== Software Engineer], [January 2015], [January 2016])
 
 Weirdly—Auckland, New Zealand
 
@@ -133,6 +131,14 @@ quizzes for multinational companies and 100,000+ candidates.
 - Architected and led a live migration from SQL to MongoDB.
 - Built the recurring billing system and merchant banking integration.
 - Integrated AI sentiment analysis (back in 2015!).
+
+#exp([=== Web Developer], [2007], [2014])
+
+Auckland, New Zealand
+
+- Built a number of small business e-commerce websites.
+- Created and managed an online farmers market for \~20 local vendors.
+- Launched a web hosting company while in high school.
 
 == Qualifications
 
