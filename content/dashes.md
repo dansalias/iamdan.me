@@ -16,11 +16,11 @@ __twenty-two__, and __run-on-brain-vomits__.
 
 From/to, e.g. __Jan–Mar__ or __London–Paris__. Also scores (they won __3–0__).
 
-<kbd>Compose</kbd> + <kbd>-</kbd>, <kbd>-</kbd>, <kbd>.</kbd>
+<kbd>Compose</kbd> + <kbd>-</kbd> , <kbd>-</kbd> , <kbd>.</kbd>
 
 ## — Em Dash
 
 To break up a phrase—similar to parentheses—or if you want people to think
 you're AI.
 
-<kbd>Compose</kbd> + <kbd>-</kbd>, <kbd>-</kbd>, <kbd>-</kbd>
+<kbd>Compose</kbd> + <kbd>-</kbd> , <kbd>-</kbd> , <kbd>-</kbd>
