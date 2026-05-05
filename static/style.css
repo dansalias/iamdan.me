@@ -131,6 +131,15 @@ figure {
   }
 }
 
+kbd {
+  padding: 0.2rem 0.4rem;
+
+  background: #fcf0ca;
+
+  border: 1px solid #ccc;
+  border-radius: 0.5rem;
+}
+
 pre {
   padding: 1rem;
 
