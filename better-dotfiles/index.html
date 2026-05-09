@@ -1,0 +1,146 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0">
+    <meta name="description" content="I am Dan, full stack software engineer.">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Google+Sans+Code:ital@0;1&family=Merriweather:ital,opsz,wght@0,18..144,300..900;1,18..144,300..900&display=swap" rel="stylesheet">
+
+    
+
+    
+
+    <link rel="stylesheet" href="/style.css" />
+
+    <title>Better Dotfiles | I am Dan</title>
+  </head>
+  <body>
+    <div id="container">
+      <header>
+        
+  
+<a href="/">
+  &lsaquo; Home
+</a>
+
+
+      </header>
+      <main>
+        
+  <article>
+    <h1>Better Dotfiles</h1>
+    <div class="date">September 2024</div>
+
+    <figure>
+  <video width="600" height="400" controls>
+    <source src="demo.mp4" type="video/mp4">
+    Your browser does not support the video tag.
+  </video>
+  <figcaption>Demo of my dotfile workflow</figcaption>
+</figure>
+<p>Whilst reorganising my dotfiles I avoided superfluous dotfile managers and
+the limitations of the “version control $HOME” method by instead including
+first-line comments of the form <code>&lt;comment delimiter&gt; ln &lt;link name&gt;</code> in files
+which needed to be symlinked.</p>
+<p>Examples:</p>
+<pre class="giallo" style="color: #3C3836; background-color: #FBF1C7;"><code data-lang="plain"><span class="giallo-l"><span>~: head -n 1 ~/dotfiles/helix/config.toml</span></span>
+<span class="giallo-l"><span># ln ~/.config/helix/config.toml</span></span>
+<span class="giallo-l"></span>
+<span class="giallo-l"><span>~: head -n 1 ~/dotfiles/polybar/config.ini</span></span>
+<span class="giallo-l"><span>; ln ~/.config/polybar/config.ini</span></span>
+<span class="giallo-l"></span>
+<span class="giallo-l"><span>~: head -n 1 ~/dotfiles/x/keyboard.conf</span></span>
+<span class="giallo-l"><span># ln /etc/X11/xorg.conf.d/00-keyboard.conf</span></span></code></pre>
+<p>The files can be scanned and symlinks can be created with some awk magic:</p>
+<pre class="giallo" style="color: #3C3836; background-color: #FBF1C7;"><code data-lang="shellscript"><span class="giallo-l"><span style="color: #B57614;">find</span><span style="color: #79740E;"> ~/dotfiles</span><span style="color: #8F3F71;"> -type</span><span style="color: #79740E;"> f</span><span style="color: #8F3F71;"> \</span></span>
+<span class="giallo-l"><span style="color: #427B58;">  |</span><span style="color: #B57614;"> xargs</span><span style="color: #8F3F71;"> -I</span><span style="color: #79740E;"> {} awk</span><span style="color: #7C6F64;"> &#39;</span><span style="color: #79740E;">NR == 1 &amp;&amp; $2 == &quot;ln&quot; {</span></span>
+<span class="giallo-l"><span style="color: #79740E;">    system(&quot;ln -sf &quot; FILENAME $3)</span></span>
+<span class="giallo-l"><span style="color: #79740E;">  }</span><span style="color: #7C6F64;">&#39;</span><span style="color: #79740E;"> {}</span></span></code></pre>
+<p>If we change our awk to just print, add a substitution for <code>~</code>, ignore the
+<code>.git</code> directory when searching for files and package everything up in a
+function we end up with:</p>
+<pre class="giallo" style="color: #3C3836; background-color: #FBF1C7;"><code data-lang="shellscript"><span class="giallo-l"><span style="color: #B57614;">list_symlinks</span><span style="color: #7C6F64;"> () {</span></span>
+<span class="giallo-l"><span style="color: #B57614;">  find</span><span style="color: #7C6F64;"> $(</span><span style="color: #B57614;">dirname</span><span style="color: #076678;"> $0</span><span style="color: #7C6F64;">)</span><span style="color: #8F3F71;"> \</span></span>
+<span class="giallo-l"><span style="color: #8F3F71;">    -type</span><span style="color: #79740E;"> f !</span><span style="color: #8F3F71;"> -path</span><span style="color: #7C6F64;"> &#39;</span><span style="color: #79740E;">*.git/*</span><span style="color: #7C6F64;">&#39;</span><span style="color: #8F3F71;"> \</span></span>
+<span class="giallo-l"><span style="color: #427B58;">    |</span><span style="color: #B57614;"> xargs</span><span style="color: #8F3F71;"> -I</span><span style="color: #79740E;"> {} awk</span><span style="color: #7C6F64;"> &#39;</span><span style="color: #79740E;">NR == 1 &amp;&amp; $2 == &quot;ln&quot; { print FILENAME &quot; &quot; $3 }</span><span style="color: #7C6F64;">&#39;</span><span style="color: #79740E;"> {}</span><span style="color: #8F3F71;"> \</span></span>
+<span class="giallo-l"><span style="color: #427B58;">    |</span><span style="color: #B57614;"> sed</span><span style="color: #7C6F64;"> &quot;</span><span style="color: #79740E;">s|^./|</span><span style="color: #7C6F64;">$(</span><span style="color: #AF3A03;">pwd</span><span style="color: #7C6F64;">)</span><span style="color: #79740E;">/|;s|~|</span><span style="color: #076678;">$HOME</span><span style="color: #79740E;">|</span><span style="color: #7C6F64;">&quot;</span></span>
+<span class="giallo-l"><span style="color: #7C6F64;">}</span></span></code></pre>
+<p><code>list_symlinks</code> can then be piped into awk to create utility commands for
+managing symlinks:</p>
+<pre class="giallo" style="color: #3C3836; background-color: #FBF1C7;"><code data-lang="shellscript"><span class="giallo-l"><span style="color: #928374;font-style: italic;"># create symlinks</span></span>
+<span class="giallo-l"><span style="color: #B57614;">list_symlinks</span><span style="color: #427B58;"> |</span><span style="color: #B57614;"> awk</span><span style="color: #7C6F64;"> &#39;</span><span style="color: #79740E;">{system(&quot;ln -sf &quot; $1 &quot; &quot; $2)}</span><span style="color: #7C6F64;">&#39;</span></span>
+<span class="giallo-l"></span>
+<span class="giallo-l"><span style="color: #928374;font-style: italic;"># remove all symlinks</span></span>
+<span class="giallo-l"><span style="color: #B57614;">list_symlinks</span><span style="color: #427B58;"> |</span><span style="color: #B57614;"> awk</span><span style="color: #7C6F64;"> &#39;</span><span style="color: #79740E;">{system(&quot;rm &quot; $2)}</span><span style="color: #7C6F64;">&#39;</span></span>
+<span class="giallo-l"></span>
+<span class="giallo-l"><span style="color: #928374;font-style: italic;"># list symlinks</span></span>
+<span class="giallo-l"><span style="color: #B57614;">list_symlinks</span><span style="color: #427B58;"> |</span><span style="color: #B57614;"> awk</span><span style="color: #7C6F64;"> &#39;</span><span style="color: #79740E;">{ print $2 &quot; -&gt; &quot; $1 }</span><span style="color: #7C6F64;">&#39;</span><span style="color: #427B58;"> |</span><span style="color: #B57614;"> column</span><span style="color: #8F3F71;"> -t</span></span></code></pre>
+<p>Using <code>readlink</code> we can enhance our symlink list to show broken symlinks:</p>
+<pre class="giallo" style="color: #3C3836; background-color: #FBF1C7;"><code data-lang="shellscript"><span class="giallo-l"><span style="color: #AF3A03;">echo</span><span style="color: #8F3F71;"> -e</span><span style="color: #7C6F64;"> &quot;$(</span><span style="color: #8F3F71;"> \</span></span>
+<span class="giallo-l"><span style="color: #AF3A03;">  [[</span><span style="color: #7C6F64;"> $(</span><span style="color: #B57614;">readlink</span><span style="color: #076678;"> $2</span><span style="color: #7C6F64;">)</span><span style="color: #9D0006;"> =</span><span style="color: #076678;"> $1</span><span style="color: #AF3A03;"> ]]</span><span style="color: #8F3F71;"> \</span></span>
+<span class="giallo-l"><span style="color: #7C6F64;">    &amp;&amp;</span><span style="color: #AF3A03;"> echo</span><span style="color: #7C6F64;"> &quot;</span><span style="color: #79740E;">\033[32m✓</span><span style="color: #7C6F64;">&quot;</span><span style="color: #8F3F71;"> \</span></span>
+<span class="giallo-l"><span style="color: #427B58;">    ||</span><span style="color: #AF3A03;"> echo</span><span style="color: #7C6F64;"> &quot;</span><span style="color: #79740E;">\033[31m✗</span><span style="color: #7C6F64;">&quot;</span><span style="color: #8F3F71;"> \</span></span>
+<span class="giallo-l"><span style="color: #7C6F64;">  )</span><span style="color: #076678;"> $2</span><span style="color: #79740E;"> -&gt; </span><span style="color: #076678;">$1</span><span style="color: #79740E;"> \033[0m</span><span style="color: #7C6F64;">&quot;</span></span></code></pre>
+<p>Example output:</p>
+<!--
+```
+✓ ~/.i3/config -&gt; ~/dotfiles/i3/config       [!green]
+✓ ~/.zshrc     -&gt; ~/dotfiles/zsh/.zshrc      [!green]
+✗ ~/.xinitrc   -&gt; ~/dotfiles/x/.xinitrc      [!red]
+✗ ~/.gitconfig -&gt; ~/dotfiles/git/.gitconfig  [!red]
+```
+-->
+<!-- move to shortcode -->
+<pre style="white-space: normal; background: #fcf0ca">
+  <code style="white-space: normal;">
+    <div style="color: #090;">✓ ~/.i3/config -&gt; ~/dotfiles/i3/config</div>
+    <div style="color: #090;">✓ ~/.zshrc     -&gt; ~/dotfiles/zsh/.zshrc</div>
+    <div style="color: #f22;">✗ ~/.xinitrc   -&gt; ~/dotfiles/x/.xinitrc</div>
+    <div style="color: #f22;">✗ ~/.gitconfig -&gt; ~/dotfiles/git/.gitconfig</div>
+  </code>
+</pre>
+<p>We can also use the power of awk to remove old links when we update our files
+(this sits nicely in a git post-commit hook).</p>
+<pre class="giallo" style="color: #3C3836; background-color: #FBF1C7;"><code data-lang="shellscript"><span class="giallo-l"><span style="color: #B57614;">git</span><span style="color: #79740E;"> diff HEAD~</span><span style="color: #427B58;"> |</span><span style="color: #B57614;"> awk</span><span style="color: #7C6F64;"> &#39;</span><span style="color: #79740E;">/\-\S*\s+ln/ {</span></span>
+<span class="giallo-l"><span style="color: #79740E;">  if(prevLine ~ /@@ -1/) {</span></span>
+<span class="giallo-l"><span style="color: #79740E;">    system(&quot;rm &quot; $3)</span></span>
+<span class="giallo-l"><span style="color: #79740E;">  }</span></span>
+<span class="giallo-l"><span style="color: #79740E;">} { prevLine=$0 }</span><span style="color: #7C6F64;">&#39;</span></span></code></pre>
+<p>See <a rel="external" href="https://github.com/dansalias/dotfiles">my dotfiles</a> for a full script which
+includes escalating with <code>sudo</code> when required.</p>
+<p>What I like about this method is that:</p>
+<ul>
+<li>it still allows a self-contained dotfile directory (mine is <code>~/dotfiles</code>).</li>
+<li>a separate record of symlinks isn’t required because symlinks are specified in
+the linked files themselves.</li>
+<li>checking links is trivial.</li>
+<li>the only dependencies are commands common to most *nix distributions.</li>
+</ul>
+<p>Try it and see what you think.</p>
+
+  </article>
+
+      </main>
+      <footer>
+        
+  
+    <a
+      target="_blank"
+      href="https://news.ycombinator.com/item?id=41453264"
+    >
+      &raquo; Comments on HN
+    </a>
+  
+  
+<a href="/">
+  &lsaquo; Home
+</a>
+
+
+      </footer>
+    </div>
+  </body>
+</html>

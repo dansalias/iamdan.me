@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0">
+    <meta name="description" content="I am Dan, full stack software engineer.">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Google+Sans+Code:ital@0;1&family=Merriweather:ital,opsz,wght@0,18..144,300..900;1,18..144,300..900&display=swap" rel="stylesheet">
+
+    
+
+    
+
+    <link rel="stylesheet" href="/style.css" />
+
+    <title>Tracking Lockfiles With git-lfs | I am Dan</title>
+  </head>
+  <body>
+    <div id="container">
+      <header>
+        
+  
+<a href="/">
+  &lsaquo; Home
+</a>
+
+
+      </header>
+      <main>
+        
+  <article>
+    <h1>Tracking Lockfiles With git-lfs</h1>
+    <div class="date">April 2020</div>
+
+    <p>We’ve all seen one of these:</p>
+<figure>
+  <img src="lockfiles-git-lfs.figure-1.webp" alt="Pull request with many changed lines" />
+  <figcaption>
+    
+      Somebody&#x27;s been busy
+    
+  </figcaption>
+</figure>
+<p>On closer inspection it’s revealed that the pull request is a simple dependency
+update and most of the changes are in a lockfile (e.g. <code>package-lock.json</code>).</p>
+<p>This can be a nuisance when pull requests are filtered and tagged by size and
+can result in simple PR reviews being deferred because of a deceptively large
+number of changes.</p>
+<p>By tracking with <a rel="external" href="https://git-lfs.github.com/">git-lfs</a> lockfile changes can be
+condensed to a single line.</p>
+<h2 id="caveats">Caveats</h2>
+<p>Changes to files tracked with <code>git-lfs</code> won’t be displayed line-by-line in pull
+requests, which is incompatible with a strict manual dependency auditing
+process.</p>
+<p>Also note that <code>git checkout</code> in your CI/CD pipeline may not fetch LFS files by
+default. For example GitHub actions needs to be configured as follows:</p>
+<pre class="giallo" style="color: #3C3836; background-color: #FBF1C7;"><code data-lang="plain"><span class="giallo-l"><span>- uses: actions/checkout@master</span></span>
+<span class="giallo-l"><span>    with:</span></span>
+<span class="giallo-l"><span>        lfs: true</span></span></code></pre>
+  </article>
+
+      </main>
+      <footer>
+        
+  
+  
+<a href="/">
+  &lsaquo; Home
+</a>
+
+
+      </footer>
+    </div>
+  </body>
+</html>

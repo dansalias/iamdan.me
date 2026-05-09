@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0">
+    <meta name="description" content="I am Dan, full stack software engineer.">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Google+Sans+Code:ital@0;1&family=Merriweather:ital,opsz,wght@0,18..144,300..900;1,18..144,300..900&display=swap" rel="stylesheet">
+
+    
+
+    
+
+    <link rel="stylesheet" href="/style.css" />
+
+    <title>Invalidate A CloudFront Distribution By Domain Name | I am Dan</title>
+  </head>
+  <body>
+    <div id="container">
+      <header>
+        
+  
+<a href="/">
+  &lsaquo; Home
+</a>
+
+
+      </header>
+      <main>
+        
+  <article>
+    <h1>Invalidate A CloudFront Distribution By Domain Name</h1>
+    <div class="date">May 2020</div>
+
+    <p>Hardcoded CloudFront distribution ids can be avoided by querying the
+distribution list for a particular domain.</p>
+<p>Bash example:</p>
+<pre class="giallo" style="color: #3C3836; background-color: #FBF1C7;"><code data-lang="shellscript"><span class="giallo-l"><span style="color: #928374;font-style: italic;"># get the CloudFront Id</span></span>
+<span class="giallo-l"><span style="color: #076678;">CF_DISTRIBUTION_ID</span><span style="color: #427B58;">=</span><span style="color: #7C6F64;">$(</span><span style="color: #B57614;">aws</span><span style="color: #79740E;"> cloudfront list-distributions</span><span style="color: #8F3F71;"> \</span></span>
+<span class="giallo-l"><span style="color: #8F3F71;">  --query</span><span style="color: #7C6F64;"> &quot;</span><span style="color: #79740E;">DistributionList.Items[?contains(Aliases.Items[0], </span><span style="color: #7C6F64;">&quot;</span><span style="color: #79740E;">example.com</span><span style="color: #7C6F64;">&quot;</span><span style="color: #79740E;">)] | [0].Id</span><span style="color: #7C6F64;">&quot;</span><span style="color: #8F3F71;"> \</span></span>
+<span class="giallo-l"><span style="color: #8F3F71;">  --output</span><span style="color: #79740E;"> text</span></span>
+<span class="giallo-l"><span style="color: #7C6F64;">)</span></span>
+<span class="giallo-l"></span>
+<span class="giallo-l"><span style="color: #928374;font-style: italic;"># create invalidation</span></span>
+<span class="giallo-l"><span style="color: #B57614;">aws</span><span style="color: #79740E;"> cloudfront create-invalidation</span><span style="color: #8F3F71;"> --distribution-id</span><span style="color: #7C6F64;"> ${</span><span style="color: #076678;">CF_DISTRIBUTION_ID</span><span style="color: #7C6F64;">}</span><span style="color: #8F3F71;"> --paths</span><span style="color: #7C6F64;"> &quot;</span><span style="color: #79740E;">/*</span><span style="color: #7C6F64;">&quot;</span></span></code></pre>
+  </article>
+
+      </main>
+      <footer>
+        
+  
+  
+<a href="/">
+  &lsaquo; Home
+</a>
+
+
+      </footer>
+    </div>
+  </body>
+</html>

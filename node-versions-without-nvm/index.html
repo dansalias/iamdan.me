@@ -1,0 +1,128 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0">
+    <meta name="description" content="I am Dan, full stack software engineer.">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Google+Sans+Code:ital@0;1&family=Merriweather:ital,opsz,wght@0,18..144,300..900;1,18..144,300..900&display=swap" rel="stylesheet">
+
+    
+
+    
+
+    <link rel="stylesheet" href="/style.css" />
+
+    <title>Switching Node Versions Without nvm | I am Dan</title>
+  </head>
+  <body>
+    <div id="container">
+      <header>
+        
+  
+<a href="/">
+  &lsaquo; Home
+</a>
+
+
+      </header>
+      <main>
+        
+  <article>
+    <h1>Switching Node Versions Without nvm</h1>
+    <div class="date">December 2019</div>
+
+    <p>I have recently been working on two parallel node projects which, for reasons we
+won’t go into, are exclusively compatible with different versions of node.</p>
+<p>I began using <a rel="external" href="http://nvm.sh/">nvm</a> to switch node versions. Automatically
+switching node versions based on .nvmrc files is great, but I found that nvm
+initialisation introduced a <strong>noticeable delay</strong> in starting new terminal
+windows. As my workflow is essentially terminals and browsers this was
+unacceptable, so I endeavoured to create a simpler solution.</p>
+<p>The basic idea is to pre-install required node versions and symlink to the
+desired version as needed.</p>
+<pre class="giallo" style="color: #3C3836; background-color: #FBF1C7;"><code data-lang="shellscript"><span class="giallo-l"><span style="color: #928374;font-style: italic;">#!/bin/bash</span></span>
+<span class="giallo-l"><span style="color: #076678;">system</span><span style="color: #427B58;">=</span><span style="color: #79740E;">linux-x64</span></span>
+<span class="giallo-l"><span style="color: #076678;">directory</span><span style="color: #427B58;">=</span><span style="color: #076678;">$HOME</span><span style="color: #79740E;">/.node-versions</span></span>
+<span class="giallo-l"></span>
+<span class="giallo-l"><span style="color: #928374;font-style: italic;"># create directory</span></span>
+<span class="giallo-l"><span style="color: #B57614;">prepare</span><span style="color: #7C6F64;">() {</span></span>
+<span class="giallo-l"><span style="color: #B57614;">  mkdir</span><span style="color: #8F3F71;"> -p</span><span style="color: #076678;"> $directory</span></span>
+<span class="giallo-l"><span style="color: #7C6F64;">}</span></span>
+<span class="giallo-l"></span>
+<span class="giallo-l"><span style="color: #928374;font-style: italic;"># install specified version</span></span>
+<span class="giallo-l"><span style="color: #B57614;">install</span><span style="color: #7C6F64;">() {</span></span>
+<span class="giallo-l"><span style="color: #B57614;">  prepare</span></span>
+<span class="giallo-l"><span style="color: #076678;">  version</span><span style="color: #427B58;">=</span><span style="color: #076678;">$1</span></span>
+<span class="giallo-l"><span style="color: #076678;">  package</span><span style="color: #427B58;">=</span><span style="color: #79740E;">node-v</span><span style="color: #076678;">$version</span><span style="color: #79740E;">-</span><span style="color: #076678;">$system</span><span style="color: #79740E;">.tar.xz</span></span>
+<span class="giallo-l"><span style="color: #076678;">  url</span><span style="color: #427B58;">=</span><span style="color: #79740E;">https://nodejs.org/download/release/v</span><span style="color: #076678;">$version</span><span style="color: #79740E;">/</span><span style="color: #076678;">$package</span></span>
+<span class="giallo-l"><span style="color: #B57614;">  wget</span><span style="color: #076678;"> $url</span><span style="color: #8F3F71;"> -P</span><span style="color: #076678;"> $directory</span></span>
+<span class="giallo-l"><span style="color: #B57614;">  tar</span><span style="color: #8F3F71;"> -xf</span><span style="color: #076678;"> $directory</span><span style="color: #79740E;">/</span><span style="color: #076678;">$package</span><span style="color: #8F3F71;"> -C</span><span style="color: #076678;"> $directory</span></span>
+<span class="giallo-l"><span style="color: #7C6F64;">}</span></span>
+<span class="giallo-l"></span>
+<span class="giallo-l"><span style="color: #928374;font-style: italic;"># switch active version</span></span>
+<span class="giallo-l"><span style="color: #B57614;">switch</span><span style="color: #7C6F64;">() {</span></span>
+<span class="giallo-l"><span style="color: #076678;">  version</span><span style="color: #427B58;">=</span><span style="color: #076678;">$1</span></span>
+<span class="giallo-l"><span style="color: #B57614;">  ln</span><span style="color: #8F3F71;"> -sf</span><span style="color: #076678;"> $directory</span><span style="color: #79740E;">/node-v</span><span style="color: #076678;">$version</span><span style="color: #79740E;">-</span><span style="color: #076678;">$system</span><span style="color: #79740E;">/bin/node</span><span style="color: #076678;"> $HOME</span><span style="color: #79740E;">/.local/bin/node</span></span>
+<span class="giallo-l"><span style="color: #B57614;">  ln</span><span style="color: #8F3F71;"> -sf</span><span style="color: #076678;"> $directory</span><span style="color: #79740E;">/node-v</span><span style="color: #076678;">$version</span><span style="color: #79740E;">-</span><span style="color: #076678;">$system</span><span style="color: #79740E;">/bin/npm</span><span style="color: #076678;"> $HOME</span><span style="color: #79740E;">/.local/bin/npm</span></span>
+<span class="giallo-l"><span style="color: #7C6F64;">}</span></span>
+<span class="giallo-l"></span>
+<span class="giallo-l"><span style="color: #9D0006;">case</span><span style="color: #7C6F64;"> &quot;</span><span style="color: #076678;">$1</span><span style="color: #7C6F64;">&quot;</span><span style="color: #9D0006;"> in</span></span>
+<span class="giallo-l"><span style="color: #AF3A03;">  prepare</span><span style="color: #427B58;">)</span></span>
+<span class="giallo-l"><span style="color: #B57614;">    prepare</span></span>
+<span class="giallo-l"><span style="color: #7C6F64;">    ;;</span></span>
+<span class="giallo-l"><span style="color: #AF3A03;">  install</span><span style="color: #427B58;">)</span></span>
+<span class="giallo-l"><span style="color: #B57614;">    install</span><span style="color: #076678;"> $2</span></span>
+<span class="giallo-l"><span style="color: #7C6F64;">    ;;</span></span>
+<span class="giallo-l"><span style="color: #AF3A03;">  switch</span><span style="color: #427B58;">)</span></span>
+<span class="giallo-l"><span style="color: #B57614;">    switch</span><span style="color: #076678;"> $2</span></span>
+<span class="giallo-l"><span style="color: #7C6F64;">    ;;</span></span>
+<span class="giallo-l"><span style="color: #9D0006;">esac</span></span></code></pre>
+<p>Thankfully the package names back to version 0.10.0 follow the same naming
+convention; see <a rel="external" href="https://nodejs.org/download/release/v12.13.1/">https://nodejs.org/download/release/v12.13.1/</a>.
+You’ll want to switch to tar.gz URLs if you going back prior to v4 though (the
+script currently downloads the tar.xz package).</p>
+<p>Also be sure to <strong>change the system variable</strong> at the top of the script to match
+your OS.</p>
+<p>With the script saved in <code>$HOME/scripts/node-switch.sh</code> and an alias:</p>
+<pre class="giallo" style="color: #3C3836; background-color: #FBF1C7;"><code data-lang="shellscript"><span class="giallo-l"><span style="color: #AF3A03;">alias</span><span style="color: #076678;"> ns</span><span style="color: #427B58;">=</span><span style="color: #076678;">$HOME</span><span>/scripts/node-switch.sh</span></span></code></pre>
+<p>We can now do the following:</p>
+<pre class="giallo" style="color: #3C3836; background-color: #FBF1C7;"><code data-lang="shellscript"><span class="giallo-l"><span style="color: #B57614;">ns</span><span style="color: #79740E;"> install</span><span style="color: #8F3F71;"> 12.13.1</span></span>
+<span class="giallo-l"><span style="color: #B57614;">ns</span><span style="color: #79740E;"> switch</span><span style="color: #8F3F71;"> 12.13.1</span></span></code></pre>
+<p>This is combined with a stripped-down version of the
+<a rel="external" href="https://github.com/nvm-sh/nvm/blob/master/README.md#calling-nvm-use-automatically-in-a-directory-with-a-nvmrc-file">.nvmrc switching logic</a>
+to maintain compatibility with project directories using <code>.nvmrc</code>.</p>
+<pre class="giallo" style="color: #3C3836; background-color: #FBF1C7;"><code data-lang="shellscript"><span class="giallo-l"><span style="color: #928374;font-style: italic;"># node-switch alias</span></span>
+<span class="giallo-l"><span style="color: #AF3A03;">alias</span><span style="color: #076678;"> ns</span><span style="color: #427B58;">=</span><span style="color: #076678;">$HOME</span><span>/scripts/node-switch.sh</span></span>
+<span class="giallo-l"></span>
+<span class="giallo-l"><span style="color: #928374;font-style: italic;"># switch node version based on .nvmrc</span></span>
+<span class="giallo-l"><span style="color: #076678;">default_node_version</span><span style="color: #427B58;">=</span><span style="color: #79740E;">12.13.1</span></span>
+<span class="giallo-l"><span style="color: #B57614;">chpwd</span><span style="color: #7C6F64;">() {</span></span>
+<span class="giallo-l"><span style="color: #9D0006;">  if</span><span style="color: #AF3A03;"> [[</span><span style="color: #9D0006;"> -f</span><span> .nvmrc </span><span style="color: #9D0006;">&amp;&amp; -r</span><span> .nvmrc </span><span style="color: #AF3A03;">]]</span><span style="color: #7C6F64;">;</span><span style="color: #9D0006;"> then</span></span>
+<span class="giallo-l"><span style="color: #B57614;">    ns</span><span style="color: #79740E;"> switch</span><span style="color: #7C6F64;"> &quot;$(</span><span style="color: #427B58;">&lt;</span><span style="color: #79740E;"> .nvmrc</span><span style="color: #7C6F64;">)&quot;</span></span>
+<span class="giallo-l"><span style="color: #9D0006;">  elif</span><span style="color: #AF3A03;"> [[</span><span style="color: #7C6F64;"> $(</span><span style="color: #B57614;">node</span><span style="color: #8F3F71;"> --version</span><span style="color: #7C6F64;">)</span><span style="color: #9D0006;"> !=</span><span> v</span><span style="color: #076678;">$default_node_version</span><span style="color: #AF3A03;"> ]]</span><span style="color: #7C6F64;">;</span><span style="color: #9D0006;"> then</span></span>
+<span class="giallo-l"><span style="color: #B57614;">    ns</span><span style="color: #79740E;"> switch</span><span style="color: #076678;"> $default_node_version</span></span>
+<span class="giallo-l"><span style="color: #9D0006;">  fi</span></span>
+<span class="giallo-l"><span style="color: #7C6F64;">}</span></span></code></pre>
+<p>The result is an instantly responsive node version switcher which doesn’t delay
+terminal start up. It’s nowhere near as comprehensive as nvm (bash completion,
+version look-up, etc) but it’s working well so far.</p>
+
+  </article>
+
+      </main>
+      <footer>
+        
+  
+  
+<a href="/">
+  &lsaquo; Home
+</a>
+
+
+      </footer>
+    </div>
+  </body>
+</html>

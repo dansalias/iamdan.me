@@ -1,0 +1,111 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0">
+    <meta name="description" content="I am Dan, full stack software engineer.">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Google+Sans+Code:ital@0;1&family=Merriweather:ital,opsz,wght@0,18..144,300..900;1,18..144,300..900&display=swap" rel="stylesheet">
+
+    
+
+    
+
+    <link rel="stylesheet" href="/style.css" />
+
+    <title>3-line JavaScript Lambda Testing | I am Dan</title>
+  </head>
+  <body>
+    <div id="container">
+      <header>
+        
+  
+<a href="/">
+  &lsaquo; Home
+</a>
+
+
+      </header>
+      <main>
+        
+  <article>
+    <h1>3-line JavaScript Lambda Testing</h1>
+    <div class="date">November 2019</div>
+
+    <p>tl;dr: <a rel="external" href="https://gist.github.com/dansalias/be26816ba0b69d2e66a7f5a9c7ef24c7#file-capitalise-spec-js-L3-L5">Import the handler, execute, check the result.</a></p>
+<p>Recently my backend development has been focused on serverless technologies,
+specifically using <a rel="external" href="https://aws.amazon.com/lambda/">AWS Lambda</a>.</p>
+<p>I wanted to speed up development by testing locally, so I began exploring the
+options for creating a local lambda execution environment.</p>
+<p>Frameworks such as <a rel="external" href="https://localstack.cloud/">Localstack</a> and
+<a rel="external" href="https://serverless.com/">Serverless</a> are an option, but were a little too heavy
+and opinionated for what I was after.
+<a rel="external" href="https://www.npmjs.com/package/lambda-local">lambda-local</a> showed promise, but I
+found it sullied the return object with additional properties which made
+assertions difficult.</p>
+<p>I began building a solution using <a rel="external" href="https://nodejs.org/api/child_process.html#child_process_child_process_fork_modulepath_args_options"><code>child_process.fork()</code></a>
+but soon realised that I was completely overthinking the simple truth:</p>
+<p><em>Lambdas are just JavaScript functions.</em></p>
+<p>So, why not just treat them the same as any other function?</p>
+<p>Let’s presume we have a lambda which capitalises a provided name and returns it:</p>
+<pre class="giallo" style="color: #3C3836; background-color: #FBF1C7;"><code data-lang="javascript"><span class="giallo-l"><span style="color: #AF3A03;">const</span><span style="color: #076678;"> changeCase</span><span style="color: #427B58;"> =</span><span style="color: #B57614;"> require</span><span>(</span><span style="color: #7C6F64;">&#39;</span><span style="color: #79740E;">change-case</span><span style="color: #7C6F64;">&#39;</span><span>)</span><span style="color: #7C6F64;">;</span></span>
+<span class="giallo-l"></span>
+<span class="giallo-l"><span style="color: #B57614;">exports</span><span style="color: #7C6F64;">.</span><span style="color: #B57614;">handler</span><span style="color: #427B58;"> =</span><span style="color: #AF3A03;"> async function</span><span style="color: #7C6F64;">(</span><span style="color: #076678;">event</span><span style="color: #7C6F64;">) {</span></span>
+<span class="giallo-l"><span style="color: #AF3A03;">  const</span><span style="color: #076678;"> result</span><span style="color: #427B58;"> =</span><span style="color: #7C6F64;"> {</span><span> success</span><span style="color: #7C6F64;">:</span><span style="color: #8F3F71;"> false</span><span style="color: #7C6F64;">,</span><span> name</span><span style="color: #7C6F64;">: &#39;&#39; };</span></span>
+<span class="giallo-l"><span style="color: #9D0006;">  if</span><span>(</span><span style="color: #076678;">event</span><span style="color: #7C6F64;">.</span><span style="color: #076678;">name</span><span>)</span><span style="color: #7C6F64;"> {</span></span>
+<span class="giallo-l"><span style="color: #076678;">    result</span><span style="color: #7C6F64;">.</span><span style="color: #076678;">name</span><span style="color: #427B58;"> =</span><span style="color: #076678;"> changeCase</span><span style="color: #7C6F64;">.</span><span style="color: #B57614;">titleCase</span><span>(</span><span style="color: #076678;">event</span><span style="color: #7C6F64;">.</span><span style="color: #076678;">name</span><span>)</span><span style="color: #7C6F64;">;</span></span>
+<span class="giallo-l"><span style="color: #076678;">    result</span><span style="color: #7C6F64;">.</span><span style="color: #076678;">success</span><span style="color: #427B58;"> =</span><span style="color: #8F3F71;"> true</span><span style="color: #7C6F64;">;</span></span>
+<span class="giallo-l"><span style="color: #7C6F64;">  }</span></span>
+<span class="giallo-l"><span style="color: #9D0006;">  return</span><span style="color: #076678;"> result</span><span style="color: #7C6F64;">;</span></span>
+<span class="giallo-l"><span style="color: #7C6F64;">}</span></span></code></pre>
+<p>We can add a companion capitalise.spec.js file which imports the function and
+executes it directly:</p>
+<pre class="giallo" style="color: #3C3836; background-color: #FBF1C7;"><code data-lang="javascript"><span class="giallo-l"><span style="color: #B57614;">describe</span><span>(</span><span style="color: #7C6F64;">&#39;</span><span style="color: #79740E;">capitalise lambda</span><span style="color: #7C6F64;">&#39;, ()</span><span style="color: #AF3A03;"> =&gt;</span><span style="color: #7C6F64;"> {</span></span>
+<span class="giallo-l"><span style="color: #B57614;">  it</span><span>(</span><span style="color: #7C6F64;">&#39;</span><span style="color: #79740E;">should capitalise the first letter of every word</span><span style="color: #7C6F64;">&#39;, ()</span><span style="color: #AF3A03;"> =&gt;</span><span style="color: #7C6F64;"> {</span></span>
+<span class="giallo-l"><span style="color: #AF3A03;">    const</span><span style="color: #076678;"> handler</span><span style="color: #427B58;"> =</span><span style="color: #B57614;"> require</span><span>(</span><span style="color: #7C6F64;">&#39;</span><span style="color: #79740E;">capitalise.js</span><span style="color: #7C6F64;">&#39;</span><span>)</span><span style="color: #7C6F64;">.</span><span style="color: #076678;">handler</span><span style="color: #7C6F64;">;</span></span>
+<span class="giallo-l"><span style="color: #AF3A03;">    const</span><span style="color: #076678;"> result</span><span style="color: #427B58;"> =</span><span style="color: #B57614;"> handler</span><span>(</span><span style="color: #7C6F64;">{</span><span>name</span><span style="color: #7C6F64;">: &#39;</span><span style="color: #79740E;">dan salias</span><span style="color: #7C6F64;">&#39;}</span><span>)</span><span style="color: #7C6F64;">;</span></span>
+<span class="giallo-l"><span style="color: #B57614;">    expect</span><span>(</span><span style="color: #076678;">result</span><span>)</span><span style="color: #7C6F64;">.</span><span style="color: #B57614;">toStrictEqual</span><span>(</span><span style="color: #7C6F64;">{</span><span>name</span><span style="color: #7C6F64;">: &#39;</span><span style="color: #79740E;">Dan Salias</span><span style="color: #7C6F64;">&#39;}</span><span>)</span><span style="color: #7C6F64;">;</span></span>
+<span class="giallo-l"><span style="color: #7C6F64;">  }</span><span>)</span><span style="color: #7C6F64;">;</span></span>
+<span class="giallo-l"><span style="color: #7C6F64;">}</span><span>)</span><span style="color: #7C6F64;">;</span></span></code></pre>
+<p>Yes, the test uses the local execution environment. If this doesn’t match the
+intended lambda execution environment you can use nvm to either change the node
+environment for the project, or toggle the node environment for testing:</p>
+<pre class="giallo" style="color: #3C3836; background-color: #FBF1C7;"><code data-lang="json"><span class="giallo-l"><span style="color: #7C6F64;">{</span></span>
+<span class="giallo-l"><span style="color: #928374;font-style: italic;">  //...</span></span>
+<span class="giallo-l"><span style="color: #7C6F64;">  &quot;</span><span style="color: #689D6A;">scripts</span><span style="color: #7C6F64;">&quot;: {</span></span>
+<span class="giallo-l"><span style="color: #7C6F64;">    &quot;</span><span style="color: #689D6A;">test</span><span style="color: #7C6F64;">&quot;: &quot;</span><span style="color: #076678;">nvm exec 10.16.3 npx jest</span><span style="color: #7C6F64;">&quot;,</span></span>
+<span class="giallo-l"><span style="color: #928374;font-style: italic;">    //...</span></span>
+<span class="giallo-l"><span style="color: #7C6F64;">  },</span></span>
+<span class="giallo-l"><span style="color: #928374;font-style: italic;">  //...</span></span>
+<span class="giallo-l"><span style="color: #7C6F64;">  &quot;</span><span style="color: #689D6A;">devDependencies</span><span style="color: #7C6F64;">&quot;: {</span></span>
+<span class="giallo-l"><span style="color: #928374;font-style: italic;">    //...</span></span>
+<span class="giallo-l"><span style="color: #7C6F64;">    &quot;</span><span style="color: #689D6A;">jest</span><span style="color: #7C6F64;">&quot;: &quot;</span><span style="color: #076678;">^24.9.0</span><span style="color: #7C6F64;">&quot;,</span></span>
+<span class="giallo-l"><span style="color: #7C6F64;">  }</span></span>
+<span class="giallo-l"><span style="color: #7C6F64;">}</span></span></code></pre>
+<p>This essentially mimics the production lambda execution process, and provides
+an easy way to use the testing tools you are already familiar with (in my case
+<a rel="external" href="https://jestjs.io/">Jest</a>) to locally test your lambdas before deploying.</p>
+<p>Don’t forget that your lambdas need to be packaged with all of their
+dependencies (node_modules) before deploying. So you’ll what to have each
+lambda in it’s own directory with it’s own package.json (and/or use <a rel="external" href="https://docs.aws.amazon.com/lambda/latest/dg/configuration-layers.html">lambda
+layers</a>
+for dependency management).</p>
+
+  </article>
+
+      </main>
+      <footer>
+        
+  
+  
+<a href="/">
+  &lsaquo; Home
+</a>
+
+
+      </footer>
+    </div>
+  </body>
+</html>

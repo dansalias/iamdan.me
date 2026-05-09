@@ -1,0 +1,139 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0">
+    <meta name="description" content="I am Dan, full stack software engineer.">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Google+Sans+Code:ital@0;1&family=Merriweather:ital,opsz,wght@0,18..144,300..900;1,18..144,300..900&display=swap" rel="stylesheet">
+
+    
+
+    
+
+    <link rel="stylesheet" href="/style.css" />
+
+    <title>A Recipe For Creating Great Software Documentation | I am Dan</title>
+  </head>
+  <body>
+    <div id="container">
+      <header>
+        
+  
+<a href="/">
+  &lsaquo; Home
+</a>
+
+
+      </header>
+      <main>
+        
+  <article>
+    <h1>A Recipe For Creating Great Software Documentation</h1>
+    <div class="date">February 2020</div>
+
+    <h2 id="start-with-a-quick-overview">Start With A Quick Overview</h2>
+<p>What does the product, package, service, framework, module or plugin do? No more
+than a couple of sentences.</p>
+<h2 id="optional-add-a-why">(Optional) - Add A Why</h2>
+<p>Why does this need to exist? Why is it different from what is already available?
+This is the one place where a slight sales pitch is ok, if a justification of
+existence is required. This isn’t necessary when the reason for the package is
+obvious (e.g. printer drivers for a new 3d printer, when none yet exist), but
+is worth considering when multiple alternatives are already available (e.g. an
+image manipluation library). Sales has no place beyond this point. Put it on
+your homepage. Not in your documentation.</p>
+<h2 id="include-installation-instructions">Include Installation Instructions</h2>
+<p>Many developers want to dive in and get their hands dirty straight away.
+Don’t make it difficult for them. Installation instructions should be
+front-and-center, or one click away from landing on the documentation.</p>
+<h2 id="give-an-easy-win">Give An Easy Win</h2>
+<p>A brief code example builds user confidence and gets the ball rolling. Something
+like:</p>
+<pre class="giallo" style="color: #3C3836; background-color: #FBF1C7;"><code data-lang="shellscript"><span class="giallo-l"><span style="color: #928374;font-style: italic;"># installation</span></span>
+<span class="giallo-l"><span style="color: #B57614;">npm</span><span style="color: #79740E;"> i my-awesome-package</span></span></code></pre><pre class="giallo" style="color: #3C3836; background-color: #FBF1C7;"><code data-lang="javascript"><span class="giallo-l"><span style="color: #928374;font-style: italic;">// usage</span></span>
+<span class="giallo-l"><span style="color: #9D0006;">import</span><span style="color: #076678;"> awesome</span><span style="color: #9D0006;"> from</span><span style="color: #7C6F64;"> &#39;</span><span style="color: #79740E;">my-awesome-package</span><span style="color: #7C6F64;">&#39;;</span></span>
+<span class="giallo-l"></span>
+<span class="giallo-l"><span style="color: #AF3A03;">const</span><span style="color: #076678;"> awesomeness</span><span style="color: #427B58;"> =</span><span style="color: #076678;"> awesome</span><span style="color: #7C6F64;">.</span><span style="color: #B57614;">createAwesomeness</span><span>(</span><span style="color: #7C6F64;">&#39;</span><span style="color: #79740E;">awesome-string</span><span style="color: #7C6F64;">&#39;</span><span>)</span><span style="color: #7C6F64;">;</span></span></code></pre><h2 id="introduce-the-main-usage-patterns">Introduce The Main Usage Patterns</h2>
+<p>Ideally one to three. For example:</p>
+<ul>
+<li>For an image manipulation library, show an example of how to resize an image.</li>
+<li>For a validation library, show an example response using valid data, and
+an example using invalid data.</li>
+<li>If this is an SDK for a WiFi-enabled coffee machine, show how to turn on/off
+the machine and make an espresso.</li>
+</ul>
+<p>Aim to answer the following question:</p>
+<p>If I want to <em>&lt;crop an image | validate a string | make a cappuccino | other
+basic operation&gt;</em>, what might that look like?</p>
+<p>Don’t make this section exhaustive. It should fit in a desktop viewport without
+scrolling. Add a smattering of links to further reading as appropriate.</p>
+<h2 id="explain-unique-concepts">Explain Unique Concepts</h2>
+<p>Why does your documentation keep referring to “pipelines”? What is a pipeline in
+the context of your software?</p>
+<p>Explain the core concepts which a user needs to understand in order to become
+an expert in using the package. How will they explain what makes the software
+useful to their friends/colleagues?</p>
+<p>Think of this as an extended glossary. Mention anything unique to this package,
+and draw relevant comparisons to other prominent packages and patterns in the
+ecosystem.</p>
+<h2 id="imagine-the-user-is-learning-on-the-fly">Imagine The User Is Learning On-The-Fly</h2>
+<p>Assume that at this point the user/developer has already installed the package
+and started using it. Your goal is to now walk them through how to continue
+intergrating it into their project.</p>
+<p>This is the time to point out any integration patterns which are unique to
+this package. For example, are there differences between using the package in
+development vs. production environments?</p>
+<p>Be sure to also mention any parts of the broader ecosystem (e.g. learning
+resources, a CLI, a public roadmap) which will help in using the package.</p>
+<p>Aim to gradually increase understanding of the software’s usage patterns. It
+shouldn’t take long for the user to be able to infer how to code something
+as yet uncovered in your guide, purely based on the patterns explicitly
+demonstrated so far.</p>
+<h2 id="give-examples">Give Examples</h2>
+<p>But not too many. The aim is to offer a thorough understanding of the package,
+so that additional functionality can be intuitively discovered and implemented.</p>
+<p>Expose <strong>patterns</strong>, not every specific use case. Ideally a single example will
+impart multiple use cases for free.</p>
+<p>Software with a broader scope, such as an eCommerce framework, may justify
+extended, project-type examples (e.g. “Acme T-Shirt Store”). These can be placed
+in a separate section, such as Examples/Tutorials/Cookbook.</p>
+<p>In most cases, relying solely on an extensive step-by-step guide to producing
+a sample project should be avoided. Conceptual understanding is far more
+beneficial in facilitating every unique use case.</p>
+<h2 id="include-a-comprehensive-reference">Include A Comprehensive Reference</h2>
+<p>The ideas above shape a software guide, which should be complemented by a
+detailed reference of the software’s public API. Keep the reference concise
+— methods, inputs and outputs — with no more than a sentence, if at all,
+explaining each.</p>
+<p>The guide and reference complement each other and can link to each other as
+appropriate. The guide is an informal document, explaining concepts and giving
+examples as needed. The reference is a formal representation of the complete
+API, and may even be generated directly from the source code.</p>
+<h2 id="keep-the-end-user-in-mind">Keep The End User In Mind</h2>
+<p>Some people have arrived from search looking to install the package right away.
+Others have seen it on a message board and want a better idea of how it can help
+them. Others still have been using it for some time and want to quickly learn
+how to achieve a specific use case.</p>
+<p>Be sure that your documentation addresses the needs of all users. Better
+documentation means fewer support queries, better software adoption, and happier
+users.</p>
+
+  </article>
+
+      </main>
+      <footer>
+        
+  
+  
+<a href="/">
+  &lsaquo; Home
+</a>
+
+
+      </footer>
+    </div>
+  </body>
+</html>

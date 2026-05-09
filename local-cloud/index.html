@@ -1,0 +1,201 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0">
+    <meta name="description" content="I am Dan, full stack software engineer.">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Google+Sans+Code:ital@0;1&family=Merriweather:ital,opsz,wght@0,18..144,300..900;1,18..144,300..900&display=swap" rel="stylesheet">
+
+    
+
+    
+
+    <link rel="stylesheet" href="/style.css" />
+
+    <title>Local Cloud Emulation | I am Dan</title>
+  </head>
+  <body>
+    <div id="container">
+      <header>
+        
+  
+<a href="/">
+  &lsaquo; Home
+</a>
+
+
+      </header>
+      <main>
+        
+  <article>
+    <h1>Local Cloud Emulation</h1>
+    <div class="date">August 2025</div>
+
+    <p>Simulating production environments locally often results in a collection of
+opaque containers and third-party “local cloud” emulators. This is a symptom of
+the system adapting to fit the cloud, rather than the other way ’round.</p>
+<p>The goal shouldn’t be to mimick the production environment as closely as
+possible—staging or multiple production mirrors serve this purpose—but
+rather to enable the best possible local development experience (typified by
+transparency and instant feedback).</p>
+<p>Adopting a <em>local first</em> approach not only improves DX, but also engenders a
+more flexible, cloud-agnostic system. This can be achieved by building in-memory
+versions of platform services. While daunting at first, it ends up being much
+simpler than expected.</p>
+<p>Here’s an in-memory event bus in 24 lines of TypeScript:</p>
+<pre class="giallo" style="color: #3C3836; background-color: #FBF1C7;"><code data-lang="typescript"><span class="giallo-l"><span style="color: #9D0006;">import</span><span style="color: #7C6F64;"> {</span><span style="color: #076678;"> MessageBus</span><span style="color: #7C6F64;"> }</span><span style="color: #9D0006;"> from</span><span style="color: #7C6F64;"> &#39;</span><span style="color: #79740E;">@/adapters</span><span style="color: #7C6F64;">&#39;</span></span>
+<span class="giallo-l"></span>
+<span class="giallo-l"><span style="color: #9D0006;">export</span><span style="color: #AF3A03;"> class</span><span style="color: #B57614;"> LocalMessageBus</span><span style="color: #AF3A03;"> implements</span><span> MessageBus</span><span style="color: #7C6F64;"> {</span></span>
+<span class="giallo-l"><span style="color: #AF3A03;">  private</span><span style="color: #076678;"> subscribers</span><span style="color: #427B58;">:</span><span style="color: #B57614;"> Map</span><span style="color: #7C6F64;">&lt;</span></span>
+<span class="giallo-l"><span style="color: #B57614;">    Platform</span><span style="color: #7C6F64;">.</span><span style="color: #B57614;">Messages</span><span style="color: #7C6F64;">.</span><span style="color: #B57614;">Topic</span><span style="color: #7C6F64;">,</span></span>
+<span class="giallo-l"><span style="color: #B57614;">    Platform</span><span style="color: #7C6F64;">.</span><span style="color: #B57614;">Messages</span><span style="color: #7C6F64;">.</span><span style="color: #B57614;">MessageHandler[]</span></span>
+<span class="giallo-l"><span style="color: #7C6F64;">  &gt;</span><span style="color: #427B58;"> =</span><span style="color: #AF3A03;"> new</span><span style="color: #B57614;"> Map</span><span>()</span></span>
+<span class="giallo-l"></span>
+<span class="giallo-l"><span style="color: #B57614;">  subscribe</span><span style="color: #7C6F64;">(</span></span>
+<span class="giallo-l"><span style="color: #076678;">    topic</span><span style="color: #427B58;">:</span><span style="color: #B57614;"> Platform</span><span style="color: #7C6F64;">.</span><span style="color: #B57614;">Messages</span><span style="color: #7C6F64;">.</span><span style="color: #B57614;">Topic</span><span style="color: #7C6F64;">,</span></span>
+<span class="giallo-l"><span style="color: #076678;">    handler</span><span style="color: #427B58;">:</span><span style="color: #B57614;"> Platform</span><span style="color: #7C6F64;">.</span><span style="color: #B57614;">Messages</span><span style="color: #7C6F64;">.</span><span style="color: #B57614;">MessageHandler</span><span style="color: #7C6F64;">,</span></span>
+<span class="giallo-l"><span style="color: #7C6F64;">  )</span><span style="color: #427B58;">:</span><span style="color: #B57614;"> void</span><span style="color: #7C6F64;"> {</span></span>
+<span class="giallo-l"><span style="color: #AF3A03;">    this</span><span style="color: #7C6F64;">.</span><span style="color: #076678;">subscribers</span><span style="color: #7C6F64;">.</span><span style="color: #B57614;">set</span><span>(</span></span>
+<span class="giallo-l"><span style="color: #076678;">      topic</span><span style="color: #7C6F64;">,</span></span>
+<span class="giallo-l"><span>      (</span><span style="color: #AF3A03;">this</span><span style="color: #7C6F64;">.</span><span style="color: #076678;">subscribers</span><span style="color: #7C6F64;">.</span><span style="color: #B57614;">get</span><span>(</span><span style="color: #076678;">topic</span><span>)</span><span style="color: #9D0006;"> ||</span><span> [])</span><span style="color: #7C6F64;">.</span><span style="color: #B57614;">concat</span><span>(</span><span style="color: #076678;">handler</span><span>)</span><span style="color: #7C6F64;">,</span></span>
+<span class="giallo-l"><span>    )</span></span>
+<span class="giallo-l"><span style="color: #7C6F64;">  }</span></span>
+<span class="giallo-l"></span>
+<span class="giallo-l"><span style="color: #B57614;">  publish</span><span style="color: #7C6F64;">(</span><span style="color: #076678;">message</span><span style="color: #427B58;">:</span><span style="color: #B57614;"> Platform</span><span style="color: #7C6F64;">.</span><span style="color: #B57614;">Messages</span><span style="color: #7C6F64;">.</span><span style="color: #B57614;">Message</span><span style="color: #7C6F64;">)</span><span style="color: #427B58;">:</span><span style="color: #B57614;"> void</span><span style="color: #7C6F64;"> {</span></span>
+<span class="giallo-l"><span style="color: #9D0006;">    for</span><span> (</span><span style="color: #AF3A03;">const</span><span style="color: #076678;"> handler</span><span style="color: #427B58;"> of</span><span style="color: #AF3A03;"> this</span><span style="color: #7C6F64;">.</span><span style="color: #076678;">subscribers</span><span style="color: #7C6F64;">.</span><span style="color: #B57614;">get</span><span>(</span><span style="color: #076678;">message</span><span style="color: #7C6F64;">.</span><span style="color: #076678;">meta</span><span style="color: #7C6F64;">.</span><span style="color: #076678;">topic</span><span style="color: #9D0006;"> ||</span><span> []))</span><span style="color: #7C6F64;"> {</span></span>
+<span class="giallo-l"><span style="color: #B57614;">      handler</span><span>(</span><span style="color: #076678;">message</span><span>)</span></span>
+<span class="giallo-l"><span style="color: #7C6F64;">    }</span></span>
+<span class="giallo-l"><span style="color: #7C6F64;">  }</span></span>
+<span class="giallo-l"><span style="color: #7C6F64;">}</span></span></code></pre>
+<p>Common patterns such as databases, file storage and API gateways are equally
+trivial.</p>
+<p>This approach encourages dependency injection and abstracting away vendor APIs:</p>
+<pre class="giallo" style="color: #3C3836; background-color: #FBF1C7;"><code data-lang="typescript"><span class="giallo-l"><span style="color: #9D0006;">import</span><span style="color: #7C6F64;"> {</span><span style="color: #076678;"> MessageBus</span><span style="color: #7C6F64;"> }</span><span style="color: #9D0006;"> from</span><span style="color: #7C6F64;"> &#39;</span><span style="color: #79740E;">@/adapters</span><span style="color: #7C6F64;">&#39;</span></span>
+<span class="giallo-l"></span>
+<span class="giallo-l"><span style="color: #9D0006;">export</span><span style="color: #AF3A03;"> const</span><span style="color: #B57614;"> broadcast</span><span style="color: #427B58;"> =</span><span style="color: #7C6F64;"> (</span><span style="color: #076678;">messageBus</span><span style="color: #427B58;">:</span><span style="color: #B57614;"> MessageBus</span><span style="color: #7C6F64;">,</span><span style="color: #076678;"> message</span><span style="color: #427B58;">:</span><span style="color: #B57614;"> Message</span><span style="color: #7C6F64;">)</span><span style="color: #AF3A03;"> =&gt;</span><span style="color: #7C6F64;"> {</span></span>
+<span class="giallo-l"><span style="color: #076678;">  messageBus</span><span style="color: #7C6F64;">.</span><span style="color: #B57614;">publish</span><span>(</span><span style="color: #076678;">event</span><span>)</span></span>
+<span class="giallo-l"><span style="color: #7C6F64;">}</span></span></code></pre>
+<p>Production adapters implement the same interfaces as local adapters:</p>
+<pre class="giallo" style="color: #3C3836; background-color: #FBF1C7;"><code data-lang="typescript"><span class="giallo-l"><span style="color: #9D0006;">export</span><span style="color: #AF3A03;"> interface</span><span style="color: #B57614;"> MessageBus</span><span style="color: #7C6F64;"> {</span></span>
+<span class="giallo-l"><span style="color: #B57614;">  publish</span><span style="color: #427B58;">:</span><span style="color: #7C6F64;"> (</span><span style="color: #076678;">message</span><span style="color: #427B58;">:</span><span style="color: #B57614;"> Platform</span><span style="color: #7C6F64;">.</span><span style="color: #B57614;">Messages</span><span style="color: #7C6F64;">.</span><span style="color: #B57614;">Message</span><span style="color: #7C6F64;">)</span><span style="color: #AF3A03;"> =&gt;</span><span style="color: #B57614;"> void</span><span style="color: #427B58;"> |</span><span style="color: #B57614;"> Promise</span><span style="color: #7C6F64;">&lt;</span><span style="color: #B57614;">void</span><span style="color: #7C6F64;">&gt;</span></span>
+<span class="giallo-l"><span style="color: #B57614;">  subscribe</span><span style="color: #427B58;">:</span><span style="color: #B57614;"> (</span></span>
+<span class="giallo-l"><span style="color: #076678;">    topic</span><span style="color: #427B58;">:</span><span style="color: #B57614;"> Platform</span><span style="color: #7C6F64;">.</span><span style="color: #B57614;">Messages</span><span style="color: #7C6F64;">.</span><span style="color: #B57614;">Topic</span><span style="color: #7C6F64;">,</span></span>
+<span class="giallo-l"><span style="color: #076678;">    handler</span><span style="color: #427B58;">:</span><span style="color: #B57614;"> Platform</span><span style="color: #7C6F64;">.</span><span style="color: #B57614;">Messages</span><span style="color: #7C6F64;">.</span><span style="color: #B57614;">MessageHandler</span><span style="color: #7C6F64;">,</span></span>
+<span class="giallo-l"><span style="color: #B57614;">  )</span><span style="color: #AF3A03;"> =&gt;</span><span style="color: #B57614;"> void</span><span style="color: #427B58;"> |</span><span style="color: #B57614;"> Promise</span><span style="color: #7C6F64;">&lt;</span><span style="color: #B57614;">void</span><span style="color: #7C6F64;">&gt;</span></span>
+<span class="giallo-l"><span style="color: #7C6F64;">}</span></span></code></pre><pre class="giallo" style="color: #3C3836; background-color: #FBF1C7;"><code data-lang="typescript"><span class="giallo-l"><span style="color: #9D0006;">import</span><span style="color: #7C6F64;"> {</span><span style="color: #076678;"> MessageBus</span><span style="color: #7C6F64;"> }</span><span style="color: #9D0006;"> from</span><span style="color: #7C6F64;"> &#39;</span><span style="color: #79740E;">@/adapters</span><span style="color: #7C6F64;">&#39;</span></span>
+<span class="giallo-l"><span style="color: #9D0006;">import</span><span style="color: #7C6F64;"> {</span></span>
+<span class="giallo-l"><span style="color: #076678;">  SNSClient</span><span style="color: #7C6F64;">,</span></span>
+<span class="giallo-l"><span style="color: #076678;">  PublishCommand</span><span style="color: #7C6F64;">,</span></span>
+<span class="giallo-l"><span style="color: #076678;">  SubscribeCommand</span><span style="color: #7C6F64;">,</span></span>
+<span class="giallo-l"><span style="color: #7C6F64;">}</span><span style="color: #9D0006;"> from</span><span style="color: #7C6F64;"> &#39;</span><span style="color: #79740E;">@aws-sdk/client-sns</span><span style="color: #7C6F64;">&#39;</span></span>
+<span class="giallo-l"></span>
+<span class="giallo-l"><span style="color: #AF3A03;">const</span><span style="color: #076678;"> client</span><span style="color: #427B58;"> =</span><span style="color: #AF3A03;"> new</span><span style="color: #B57614;"> SNSClient</span><span>(</span><span style="color: #7C6F64;">{}</span><span>)</span></span>
+<span class="giallo-l"></span>
+<span class="giallo-l"><span style="color: #9D0006;">export</span><span style="color: #AF3A03;"> class</span><span style="color: #B57614;"> AWSMessageBus</span><span style="color: #AF3A03;"> implements</span><span> MessageBus</span><span style="color: #7C6F64;"> {</span></span>
+<span class="giallo-l"><span style="color: #AF3A03;">  async</span><span style="color: #B57614;"> publish</span><span style="color: #7C6F64;">(</span><span style="color: #076678;">message</span><span style="color: #427B58;">:</span><span style="color: #B57614;"> Platform</span><span style="color: #7C6F64;">.</span><span style="color: #B57614;">Messages</span><span style="color: #7C6F64;">.</span><span style="color: #B57614;">Message</span><span style="color: #7C6F64;">)</span><span style="color: #427B58;">:</span><span style="color: #B57614;"> Promise</span><span style="color: #7C6F64;">&lt;</span><span style="color: #B57614;">void</span><span style="color: #7C6F64;">&gt; {</span></span>
+<span class="giallo-l"><span style="color: #9D0006;">    await</span><span style="color: #076678;"> client</span><span style="color: #7C6F64;">.</span><span style="color: #B57614;">send</span><span>(</span></span>
+<span class="giallo-l"><span style="color: #AF3A03;">      new</span><span style="color: #B57614;"> PublishCommand</span><span>(</span><span style="color: #7C6F64;">{</span></span>
+<span class="giallo-l"><span>        TopicArn</span><span style="color: #7C6F64;">:</span><span style="color: #AF3A03;"> this</span><span style="color: #7C6F64;">.</span><span style="color: #B57614;">getTopicArn</span><span>(</span><span style="color: #076678;">topic</span><span>)</span><span style="color: #7C6F64;">,</span></span>
+<span class="giallo-l"><span>        Message</span><span style="color: #7C6F64;">:</span><span style="color: #076678;"> JSON</span><span style="color: #7C6F64;">.</span><span style="color: #B57614;">stringify</span><span>(</span><span style="color: #076678;">message</span><span>)</span><span style="color: #7C6F64;">,</span></span>
+<span class="giallo-l"><span style="color: #7C6F64;">      }</span><span>)</span><span style="color: #7C6F64;">,</span></span>
+<span class="giallo-l"><span>    )</span></span>
+<span class="giallo-l"><span style="color: #7C6F64;">  }</span></span>
+<span class="giallo-l"></span>
+<span class="giallo-l"><span style="color: #AF3A03;">  async</span><span style="color: #B57614;"> subscribe</span><span style="color: #7C6F64;">(</span></span>
+<span class="giallo-l"><span style="color: #076678;">    topic</span><span style="color: #427B58;">:</span><span style="color: #B57614;"> Platform</span><span style="color: #7C6F64;">.</span><span style="color: #B57614;">Messages</span><span style="color: #7C6F64;">.</span><span style="color: #B57614;">Topic</span><span style="color: #7C6F64;">,</span></span>
+<span class="giallo-l"><span style="color: #076678;">    handler</span><span style="color: #427B58;">:</span><span style="color: #B57614;"> Platform</span><span style="color: #7C6F64;">.</span><span style="color: #B57614;">Messages</span><span style="color: #7C6F64;">.</span><span style="color: #B57614;">MessageHandler</span><span style="color: #7C6F64;">,</span></span>
+<span class="giallo-l"><span style="color: #7C6F64;">  )</span><span style="color: #427B58;">:</span><span style="color: #B57614;"> Promise</span><span style="color: #7C6F64;">&lt;</span><span style="color: #B57614;">void</span><span style="color: #7C6F64;">&gt; {</span></span>
+<span class="giallo-l"><span style="color: #9D0006;">    await</span><span style="color: #076678;"> client</span><span style="color: #7C6F64;">.</span><span style="color: #B57614;">send</span><span>(</span></span>
+<span class="giallo-l"><span style="color: #AF3A03;">      new</span><span style="color: #B57614;"> SubscribeCommand</span><span>(</span><span style="color: #7C6F64;">{</span></span>
+<span class="giallo-l"><span>        TopicArn</span><span style="color: #7C6F64;">:</span><span style="color: #AF3A03;"> this</span><span style="color: #7C6F64;">.</span><span style="color: #B57614;">getTopicArn</span><span>(</span><span style="color: #076678;">topic</span><span>)</span><span style="color: #7C6F64;">,</span></span>
+<span class="giallo-l"><span>        Protocol</span><span style="color: #7C6F64;">: &#39;</span><span style="color: #79740E;">lambda</span><span style="color: #7C6F64;">&#39;,</span></span>
+<span class="giallo-l"><span>        Endpoint</span><span style="color: #7C6F64;">:</span><span style="color: #AF3A03;"> this</span><span style="color: #7C6F64;">.</span><span style="color: #B57614;">getHandlerArn</span><span>(</span><span style="color: #076678;">handler</span><span>)</span><span style="color: #7C6F64;">,</span></span>
+<span class="giallo-l"><span style="color: #7C6F64;">      }</span><span>)</span></span>
+<span class="giallo-l"><span>    )</span></span>
+<span class="giallo-l"><span style="color: #7C6F64;">  }</span></span>
+<span class="giallo-l"></span>
+<span class="giallo-l"><span style="color: #928374;font-style: italic;">  // arn helpers redacted</span></span>
+<span class="giallo-l"><span style="color: #7C6F64;">}</span></span></code></pre>
+<p>And across a project this looks like:</p>
+<pre class="giallo" style="color: #3C3836; background-color: #FBF1C7;"><code data-lang="plain"><span class="giallo-l"><span>platform</span></span>
+<span class="giallo-l"><span>├── adapters</span></span>
+<span class="giallo-l"><span>│   ├── api-gateway.ts</span></span>
+<span class="giallo-l"><span>│   ├── database.ts</span></span>
+<span class="giallo-l"><span>│   ├── message-bus.ts</span></span>
+<span class="giallo-l"><span>│   └── ...</span></span>
+<span class="giallo-l"><span>└── environments</span></span>
+<span class="giallo-l"><span>    ├── cloud</span></span>
+<span class="giallo-l"><span>    │   └── aws</span></span>
+<span class="giallo-l"><span>    │       ├── api-gateway.ts</span></span>
+<span class="giallo-l"><span>    │       ├── database.ts</span></span>
+<span class="giallo-l"><span>    │       ├── message-bus.ts</span></span>
+<span class="giallo-l"><span>    │       └── ...</span></span>
+<span class="giallo-l"><span>    └── local</span></span>
+<span class="giallo-l"><span>        ├── api-gateway.ts</span></span>
+<span class="giallo-l"><span>        ├── database.ts</span></span>
+<span class="giallo-l"><span>        ├── message-bus.ts</span></span>
+<span class="giallo-l"><span>        └── ...</span></span></code></pre>
+<p>Local integration and end-to-end testing is now much simpler.</p>
+<p>Introducing auxillary functionality such as logging is trivial:</p>
+<pre class="giallo" style="color: #3C3836; background-color: #FBF1C7;"><code data-lang="typescript"><span class="giallo-l"><span style="color: #9D0006;">export</span><span style="color: #AF3A03;"> interface</span><span style="color: #B57614;"> Logger</span><span style="color: #7C6F64;"> {</span></span>
+<span class="giallo-l"><span style="color: #B57614;">  log</span><span style="color: #427B58;">:</span><span style="color: #7C6F64;"> (</span><span style="color: #076678;">message</span><span style="color: #427B58;">:</span><span style="color: #B57614;"> string</span><span style="color: #7C6F64;">)</span><span style="color: #AF3A03;"> =&gt;</span><span style="color: #B57614;"> void</span><span style="color: #427B58;"> |</span><span style="color: #B57614;"> Promise</span><span style="color: #7C6F64;">&lt;</span><span style="color: #B57614;">void</span><span style="color: #7C6F64;">&gt;</span></span>
+<span class="giallo-l"><span style="color: #7C6F64;">}</span></span></code></pre><pre class="giallo" style="color: #3C3836; background-color: #FBF1C7;"><code data-lang="typescript"><span class="giallo-l"><span style="color: #9D0006;">import</span><span style="color: #7C6F64;"> {</span><span style="color: #076678;"> Logger</span><span style="color: #7C6F64;"> }</span><span style="color: #9D0006;"> from</span><span style="color: #7C6F64;"> &#39;</span><span style="color: #79740E;">@/adapters</span><span style="color: #7C6F64;">&#39;</span></span>
+<span class="giallo-l"></span>
+<span class="giallo-l"><span style="color: #9D0006;">export</span><span style="color: #AF3A03;"> class</span><span style="color: #B57614;"> LocalLogger</span><span style="color: #AF3A03;"> implements</span><span> Logger</span><span style="color: #7C6F64;"> {</span></span>
+<span class="giallo-l"><span style="color: #B57614;">  log</span><span style="color: #7C6F64;">(</span><span style="color: #076678;">message</span><span style="color: #7C6F64;">) {</span></span>
+<span class="giallo-l"><span style="color: #076678;">    console</span><span style="color: #7C6F64;">.</span><span style="color: #B57614;">log</span><span>(</span><span style="color: #076678;">message</span><span>)</span></span>
+<span class="giallo-l"><span style="color: #7C6F64;">  }</span></span>
+<span class="giallo-l"><span style="color: #7C6F64;">}</span></span></code></pre>
+<p>And shifting left on production logging is encouraged at the same time:</p>
+<pre class="giallo" style="color: #3C3836; background-color: #FBF1C7;"><code data-lang="typescript"><span class="giallo-l"><span style="color: #9D0006;">import</span><span style="color: #7C6F64;"> {</span><span style="color: #076678;"> Logger</span><span style="color: #7C6F64;"> }</span><span style="color: #9D0006;"> from</span><span style="color: #7C6F64;"> &#39;</span><span style="color: #79740E;">@/adapters</span><span style="color: #7C6F64;">&#39;</span></span>
+<span class="giallo-l"><span style="color: #9D0006;">import</span><span style="color: #7C6F64;"> {</span></span>
+<span class="giallo-l"><span style="color: #076678;">  CloudWatchLogsClient</span><span style="color: #7C6F64;">,</span></span>
+<span class="giallo-l"><span style="color: #076678;">  PutLogEventsCommand</span><span style="color: #7C6F64;">,</span></span>
+<span class="giallo-l"><span style="color: #7C6F64;">}</span><span style="color: #9D0006;"> from</span><span style="color: #7C6F64;"> &quot;</span><span style="color: #79740E;">@aws-sdk/client-cloudwatch-logs</span><span style="color: #7C6F64;">&quot;</span></span>
+<span class="giallo-l"></span>
+<span class="giallo-l"><span style="color: #9D0006;">export</span><span style="color: #AF3A03;"> class</span><span style="color: #B57614;"> AWSLogger</span><span style="color: #AF3A03;"> implements</span><span> Logger</span><span style="color: #7C6F64;"> {</span></span>
+<span class="giallo-l"><span style="color: #AF3A03;">  private</span><span style="color: #076678;"> client</span><span style="color: #427B58;">:</span><span style="color: #B57614;"> CloudWatchLogsClient</span></span>
+<span class="giallo-l"></span>
+<span class="giallo-l"><span style="color: #AF3A03;">  async</span><span style="color: #B57614;"> log</span><span style="color: #7C6F64;">(</span><span style="color: #076678;">message</span><span style="color: #7C6F64;">) {</span></span>
+<span class="giallo-l"><span style="color: #9D0006;">    await</span><span style="color: #076678;"> client</span><span style="color: #7C6F64;">.</span><span style="color: #B57614;">send</span><span>(</span><span style="color: #AF3A03;">new</span><span style="color: #B57614;"> PutLogEventsCommand</span><span>(</span><span style="color: #7C6F64;">{</span></span>
+<span class="giallo-l"><span>      logGroupName</span><span style="color: #7C6F64;">:</span><span style="color: #076678;"> process</span><span style="color: #7C6F64;">.</span><span style="color: #076678;">env</span><span style="color: #7C6F64;">.</span><span style="color: #076678;">AWS_LOG_GROUP_NAME</span><span style="color: #7C6F64;">,</span></span>
+<span class="giallo-l"><span>      logStreamName</span><span style="color: #7C6F64;">:</span><span style="color: #076678;"> process</span><span style="color: #7C6F64;">.</span><span style="color: #076678;">env</span><span style="color: #7C6F64;">.</span><span style="color: #076678;">LOG_STREAM_NAME</span><span style="color: #7C6F64;">,</span></span>
+<span class="giallo-l"><span>      logEvents</span><span style="color: #7C6F64;">:</span><span> [</span><span style="color: #7C6F64;">{</span></span>
+<span class="giallo-l"><span style="color: #076678;">        message</span><span style="color: #7C6F64;">,</span></span>
+<span class="giallo-l"><span>        timestamp</span><span style="color: #7C6F64;">:</span><span style="color: #076678;"> Date</span><span style="color: #7C6F64;">.</span><span style="color: #B57614;">now</span><span>()</span><span style="color: #7C6F64;">,</span></span>
+<span class="giallo-l"><span style="color: #7C6F64;">      }</span><span>]</span></span>
+<span class="giallo-l"><span style="color: #7C6F64;">    }</span><span>))</span></span>
+<span class="giallo-l"><span style="color: #7C6F64;">  }</span></span>
+<span class="giallo-l"><span style="color: #7C6F64;">}</span></span></code></pre>
+<p>The code and mindset shift from cloud APIs as a base layer to the cloud as a
+<em>dependency</em> is powerful, and many of these “shift left” opportunities present
+themselves once the local environment becomes the reference platform
+implementation.</p>
+<p>Try it out!</p>
+
+  </article>
+
+      </main>
+      <footer>
+        
+  
+    <a
+      target="_blank"
+      href="https://news.ycombinator.com/item?id=44940393"
+    >
+      &raquo; Comments on HN
+    </a>
+  
+  
+<a href="/">
+  &lsaquo; Home
+</a>
+
+
+      </footer>
+    </div>
+  </body>
+</html>

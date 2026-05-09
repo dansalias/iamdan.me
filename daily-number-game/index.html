@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0">
+    <meta name="description" content="I am Dan, full stack software engineer.">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Google+Sans+Code:ital@0;1&family=Merriweather:ital,opsz,wght@0,18..144,300..900;1,18..144,300..900&display=swap" rel="stylesheet">
+
+    
+
+    
+
+    <link rel="stylesheet" href="/style.css" />
+
+    <title>A Daily Game Without a Database | I am Dan</title>
+  </head>
+  <body>
+    <div id="container">
+      <header>
+        
+  
+<a href="/">
+  &lsaquo; Home
+</a>
+
+
+      </header>
+      <main>
+        
+  <article>
+    <h1>A Daily Game Without a Database</h1>
+    <div class="date">March 2022</div>
+
+    <p>In response to the popularity of
+<a rel="external" href="https://www.nytimes.com/games/wordle/index.html">Wordle</a> I created
+<a rel="external" href="https://numble.cc/">Numble</a> for the more numerically inclined.</p>
+<p>My first idea for serving a new daily game was to prepopulate a database, but I
+found a more elegant solution which uses a hash of the current date to choose a
+target number and set of source numbers.</p>
+<p>The first part of the hash determines the target number, and the 6 source
+numbers are chosen by continuing along the hash.</p>
+<figure>
+  <img src="daily-number-game.figure-1.webp" alt="Visualisation of picking game numbers by walking a hash of today&#x27;s date" />
+  <figcaption>
+    
+      Building a daily game from a hash of the current date
+    
+  </figcaption>
+</figure>
+<p>There’s some extra logic to limit repeats and include at least one big number,
+but this is essentially what happens whenever today’s game is requested.</p>
+<p>By taking recursive hashes unlimited random data can be seeded.</p>
+<p>Databases aren’t evil, but in some cases they may be an unnecessary complexity.</p>
+
+  </article>
+
+      </main>
+      <footer>
+        
+  
+    <a
+      target="_blank"
+      href="https://news.ycombinator.com/item?id=41453335"
+    >
+      &raquo; Comments on HN
+    </a>
+  
+  
+<a href="/">
+  &lsaquo; Home
+</a>
+
+
+      </footer>
+    </div>
+  </body>
+</html>

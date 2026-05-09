@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0">
+    <meta name="description" content="I am Dan, full stack software engineer.">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Google+Sans+Code:ital@0;1&family=Merriweather:ital,opsz,wght@0,18..144,300..900;1,18..144,300..900&display=swap" rel="stylesheet">
+
+    
+
+    
+
+    <link rel="stylesheet" href="/style.css" />
+
+    <title>You Probably Don&#x27;t Need UUIDs | I am Dan</title>
+  </head>
+  <body>
+    <div id="container">
+      <header>
+        
+  
+<a href="/">
+  &lsaquo; Home
+</a>
+
+
+      </header>
+      <main>
+        
+  <article>
+    <h1>You Probably Don&#x27;t Need UUIDs</h1>
+    <div class="date">October 2021</div>
+
+    <aside>
+  
+    <h3 id="what-s-a-uuid">What’s a UUID?</h3>
+<p>A UUID is a 128-bit ‘universally unique identifier’, typically represented as a
+36-character hyphenated hex string (e.g. <code>01234567-89ab-cdef-0123-456789abcdef</code>).
+<a rel="external" href="https://en.wikipedia.org/wiki/Universally_unique_identifier">» Wikipedia</a></p>
+
+  
+</aside>
+<p>UUIDs are great. There are packages to generate them in every major language and
+generating 1 million (v4) every second it will take ~83,000 years until there’s
+a 1% chance of two being equal. This makes them great for defending against
+dictionary attacks (where guessing a UUID would be a security threat).</p>
+<p>But in most instances UUIDs are overkill. They add unnecessary parsing and
+storage overhead<sup class="footnote-reference" id="fr-1-1"><a href="#fn-1">1</a></sup>, they lead to unwieldy URLs, and they’re impractical to
+share over the phone. Often a much shorter id string is more fit for purpose.</p>
+<p>Here’s a TypeScript snippet for generating n-character alphanumeric (only
+lowercase) pseudo-random strings. Sticking to lowercase makes verbal
+communication much easier.</p>
+<pre class="giallo" style="color: #3C3836; background-color: #FBF1C7;"><code data-lang="typescript"><span class="giallo-l"><span style="color: #AF3A03;">const</span><span style="color: #B57614;"> createAlphanumericId</span><span style="color: #427B58;"> =</span><span style="color: #7C6F64;"> (</span><span style="color: #076678;">length</span><span style="color: #427B58;">:</span><span style="color: #B57614;"> number</span><span style="color: #7C6F64;">)</span><span style="color: #427B58;">:</span><span style="color: #B57614;"> string</span><span style="color: #AF3A03;"> =&gt;</span><span style="color: #7C6F64;"> {</span></span>
+<span class="giallo-l"><span style="color: #9D0006;">  return</span><span style="color: #076678;"> Array</span><span style="color: #7C6F64;">.</span><span style="color: #B57614;">from</span><span>(</span><span style="color: #7C6F64;">{</span><span style="color: #076678;"> length</span><span style="color: #7C6F64;"> }, ()</span><span style="color: #AF3A03;"> =&gt;</span></span>
+<span class="giallo-l"><span style="color: #076678;">    Math</span><span style="color: #7C6F64;">.</span><span style="color: #B57614;">floor</span><span>(</span></span>
+<span class="giallo-l"><span style="color: #076678;">      Math</span><span style="color: #7C6F64;">.</span><span style="color: #B57614;">random</span><span>()</span><span style="color: #427B58;"> *</span><span style="color: #8F3F71;"> 36</span></span>
+<span class="giallo-l"><span>    )</span><span style="color: #7C6F64;">.</span><span style="color: #B57614;">toString</span><span>(</span><span style="color: #8F3F71;">36</span><span>)</span></span>
+<span class="giallo-l"><span>  )</span><span style="color: #7C6F64;">.</span><span style="color: #B57614;">join</span><span>(</span><span style="color: #7C6F64;">&#39;&#39;</span><span>)</span></span>
+<span class="giallo-l"><span style="color: #7C6F64;">}</span></span></code></pre><section class="footnotes">
+<ol class="footnotes-list">
+<li id="fn-1">
+<p>Though they can be compressed to 16 bytes, more often than not UUIDs are stored in their 36-byte encoded string form. <a href="#fr-1-1">↩</a></p>
+</li>
+</ol>
+</section>
+
+  </article>
+
+      </main>
+      <footer>
+        
+  
+  
+<a href="/">
+  &lsaquo; Home
+</a>
+
+
+      </footer>
+    </div>
+  </body>
+</html>
