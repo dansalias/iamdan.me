@@ -131,8 +131,8 @@
     - Ensured organisation-wide GDPR compliance by creating shared analytics and
       consent libraries.
     - Accelerated product development by creating a centralised design system.
-    - Further empowered product teams by introducing platform engineering and
-      IaC via the AWS CDK.
+    - Reduced new service development time from weeks to days by introducing IaC
+      via the AWS CDK.
   ],
 )
 
