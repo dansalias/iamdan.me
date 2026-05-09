@@ -1,8 +1,8 @@
 #set page(
   margin: (
     x: 24pt,
-    top: 26pt,
-    bottom: 18pt,
+    top: 24pt,
+    bottom: 20pt,
   ),
 )
 
@@ -26,8 +26,7 @@
 )
 
 #show heading.where(level: 2): set block(
-  above: 24pt,
-  below: 6pt,
+  above: 18pt,
 )
 
 #show heading.where(level: 2): set text(
@@ -35,38 +34,50 @@
   ligatures: false,
 )
 
-#show heading.where(level: 2): it => {
-  it
-  v(-18pt)
+#show heading.where(level: 2): s => {
+  s
+  v(-14pt)
   line(length: 100%, stroke: 0.8pt + black)
 }
 
 #show heading.where(level: 2): smallcaps
 
-#show heading.where(level: 3): set text(
-  size: 12pt,
-)
-
 #set par(
-  leading: 9pt,
+  leading: 7pt,
 )
 
 #show link: set text(fill: rgb("#4287f5"))
 
-#let exp(title, start, end) = {
-  grid(
-    columns: (2fr, 1fr),
-    inset: (top: 6pt, bottom: -5pt),
-    align: (left, right),
-    [#title],
-    [
-      #set text(
-        style: "italic",
-      )
-      #start–#end
-    ],
-  )
-}
+#let delim = "\u{2B29}"
+
+#let strong(s) = text(weight: "medium", size: 1.1em, s)
+
+#let exp(title, company, location, start, end, content) = block(
+  below: 18pt,
+  [
+    #grid(
+      columns: (7fr, 3fr),
+      align: (left, right),
+      inset: (bottom: -4pt),
+      [
+        #strong[#title]
+        #if company != none [ #delim #company ]
+        #if location != none [ #delim #location ]
+      ],
+      [
+        #set text(
+          style: "italic",
+        )
+        #start–#end
+      ],
+    )
+    #content
+  ]
+)
+
+#let proj(name, url, description) = [
+  #strong[#link(url)[#name]] — #description
+]
 
 #align(center)[
   = Daniel Young
@@ -74,84 +85,130 @@
   Full-stack software engineer. 10+ years building web applications and
   distributed systems at scale.
 
-  #link("https://www.linkedin.com/in/dansalias/")[linkedin.com/in/dansalias] \u{2B29}
-  #link("https://github.com/dansalias")[github.com/dansalias] \u{2B29}
+  #link("https://www.linkedin.com/in/dansalias/")[linkedin.com/in/dansalias] #delim
+  #link("https://github.com/dansalias")[github.com/dansalias] #delim
   #link("https://iamdan.me")[iamdan.me]
 ]
 
 == Experience
 
 #exp(
-  [=== #strike(stroke: 0.75pt, extent: 1.2pt, offset: -3.4pt)[Unemployed] Sabbatical],
+  [#strike(stroke: 0.75pt, extent: 1.2pt, offset: -3.4pt)[Unemployed] Sabbatical],
+  none, none,
   [April 2023],
   [present],
+  [
+    Failed at 2 startup attempts. Travelled to 9 new countries. Currently
+    learning the full ML stack from warps to ops.
+  ]
 )
 
-#v(5pt)
 
-Failed at 2 startup attempts. Travelled to 9 new countries. Currently learning
-the full ML stack from warps to ops.
+#exp(
+  "Senior Software Engineer",
+  "LoveToKnowMedia",
+  "Barcelona, Spain",
+  [May 2019],
+  [April 2023],
+  [
+    Developed cross-product libraries and systems to improve engineering
+    productivity across websites and applications serving 200million+
+    pageviews/month.
 
-#exp([=== Senior Software Engineer], [May 2019], [April 2023])
+    - Enabled product teams to focus on feature development by consolidating 5
+      discrete ad-tech implementations into a single monetisation stack managing
+      monthly revenue of \$1million+.
+    - Ensured organisation-wide GDPR compliance by creating shared analytics and
+      consent libraries.
+    - Accelerated product development by creating a centralised design system.
+    - Further empowered product teams by introducing platform engineering and
+      IaC via the AWS CDK.
+  ],
+)
 
-LoveToKnow Media—Barcelona, Spain
+#exp(
+  "Software Engineer",
+  "Freelance",
+  "Auckland, New Zealand",
+  [February 2016],
+  [May 2019],
+  [
+    Led frontend development of several web applications and sites in
+    partnership with local digital agencies, specialising in building SPAs with
+    React and Vue:
 
-Developed cross-product libraries and systems to improve engineering
-productivity across websites and applications serving 200million+
-pageviews/month.
+    - PrimePanels, creating a new website with interactive collection
+      management.
+    - YourDrive, a peer-to-peer car rental app (discontinued).
+    - Quicksense Education dashboard, helping students master I/GCSE
+      mathematics.
+    - MyBalance, allowing thousands of farmers to interactively optimise soil
+      nutrients.
+    - movieXchange, streamlining media distribution and ticketing for cinemas
+      worldwide.
+  ],
+)
 
-- Enabled product teams to focus on feature development by consolidating 5
-  discrete ad-tech implementations into a single monetisation stack managing
-  monthly revenue of \$1million+.
-- Ensured organisation-wide GDPR compliance by creating shared analytics and
-  consent libraries.
-- Accelerated product development by introducing a centralised design system.
 
-#exp([=== Software Engineer], [February 2016], [May 2019])
+#exp(
+  "Software Engineer",
+  "Weirdly",
+  "Auckland, New Zealand",
+  [January 2015],
+  [January 2016],
+  [
+    Built the Weirdly SaaS application, creating culture-fit quizzes for
+    multinational companies and 100,000+ candidates.
 
-Freelance—Auckland, New Zealand
+    - Administered the Linux server and databases, including a live migration
+      from SQL to MongoDB.
+    - Scaled from dozens to thousands of users by re-architecting from a single
+      VPS to multiple AWS services.
+    - Greatly improved developer experience by introducing Docker and CI/CD.
+    - Improved API performance by modernising a PHP monolith and replacing key
+      endpoints with Node.js microservices.
+    - Enhanced candidate profiling by integrating AI sentiment analysis (back in
+      2015!).
+  ],
+)
 
-Led frontend development of several web applications and sites in partnership
-with local digital agencies:
+#exp(
+  "Web Developer",
+  none,
+  "Auckland, New Zealand",
+  [2007],
+  [2014],
+  [
+    - Created a number of small business e-commerce websites.
+    - Founded an online farmer's market enabling \~20 local vendors to sell
+      their products online.
+    - Launched a web hosting company while in high school.
+  ],
+)
 
-- PrimePanels, creating a new website with interactive collection management.
-- YourDrive, a peer-to-peer car rental app (discontinued).
-- Quicksense Education dashboard, helping students master I/GCSE mathematics.
-- MyBalance, allowing thousands of farmers to interactively optimise soil
-  nutrients.
-- movieXchange, streamlining media distribution and ticketing for cinemas
-  worldwide.
+== Projects
 
-#exp([=== Software Engineer], [January 2015], [January 2016])
-
-Weirdly—Auckland, New Zealand
-
-Built the Weirdly SaaS application, creating culture-fit quizzes for
-multinational companies and 100,000+ candidates.
-
-- Greatly improved reliability by scaling cloud architecture from a single VPS
-  to multiple AWS services.
-- Simplified backend development by architecting a live migration from SQL to
-  MongoDB.
-- Enhanced candidate profiling by integrating AI sentiment analysis (back in
-  2015!).
-
-#exp([=== Web Developer], [2007], [2014])
-
-Auckland, New Zealand
-
-- Developed a number of small business e-commerce websites.
-- Founded an online farmer's market enabling \~20 local vendors to sell their
-  products online.
-- Launched a web hosting company while in high school.
+#proj(
+  "784.ai",
+  "https://784.ai",
+  [
+    Browser-based MNIST neural network demo using TypeScript + Svelte and
+    trained in Rust.
+  ],
+)
+#proj(
+  "numble.cc",
+  "https://numble.cc",
+  "Wordle-inspired number game for ~500 daily players.",
+)
 
 == Qualifications
 
 #grid(
-  columns: (2fr, 1fr),
-  inset: (top: 6pt, bottom: -5pt),
+  columns: (7fr, 3fr),
   align: (left, right),
-  [=== Bachelor of Engineering (Mechanical)],
+  inset: (bottom: -4pt),
+  [#strong[Bachelor of Engineering (Mechanical)]],
   [_Graduated 2016_]
 )
 
