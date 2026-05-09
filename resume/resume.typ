@@ -48,7 +48,17 @@
 
 #show link: set text(fill: rgb("#4287f5"))
 
-#let delim = "\u{2B29}"
+#let delim = box(inset: (x: 0.15em))[
+  #box(width: 0.25em, height: 0.25em, baseline: -0.19em)[
+    #polygon(
+      fill: black,
+      (50%, 0%),
+      (100%, 50%),
+      (50%, 100%),
+      (0%, 50%),
+    )
+  ]
+]
 
 #let strong(s) = text(weight: "medium", size: 1.1em, s)
 
